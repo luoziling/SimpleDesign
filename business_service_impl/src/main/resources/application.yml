@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: eureka-business
+  devtools:
+    restart:
+      enabled: true #设置开启热部署
+    freemarker:
+      cache: false #页面不加载缓存，修改即时生效
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 9091
+eureka:
+  instance:
+    prefer-ip-address: true # 注册时使用服务IP
+
+  client:
+    service-url:
+      defaultZone: http://eureka8761.com:8761/eureka
+#      defaultZone: http://eureka8761.com:8761/eureka,http://eureka8762.com:8762/eureka,http://eureka8763.com:8763/eureka
+
+    register-with-eureka: true # 是否将自己注册到eureka
+    fetch-registry: true # 是否从eureka获取注册信息
+
+debug: true

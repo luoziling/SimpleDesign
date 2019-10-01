@@ -1,0 +1,27 @@
+#配置服务注册中心端口
+#server:
+#  port: 8761
+#
+#eureka:
+#  instance:
+#    hostname: eureka_server #eureka实例的主机名
+#  client:
+#    fetch-registry: false #不从eureka上获取信息
+#    register-with-eureka: false #不把自己注册到eureka上
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka #In the preceding example, "defaultZone" is a magic string fallback value that provides the service URL for any client that does not express a preference (in other words, it is a useful default).
+
+
+# 集群配置：
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: eureka8761.com #eureka实例的主机名
+  client:
+    fetch-registry: false #不从eureka上获取信息
+    register-with-eureka: false #不把自己注册到eureka上
+    service-url:
+      defaultZone: http://eureka8761.com:8761/eureka
+#      defaultZone: http://eureka8762.com:8762/eureka,http://eureka8763.com:8763/eureka #In the preceding example, "defaultZone" is a magic string fallback value that provides the service URL for any client that does not express a preference (in other words, it is a useful default).

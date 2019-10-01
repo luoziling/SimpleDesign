@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: eureka-db-provider
+  devtools:
+    restart:
+      enabled: true #设置开启热部署
+  freemarker:
+    cache: false #页面不加载缓存，修改即时生效
+server:
+  port: 8091
+eureka:
+  instance:
+    prefer-ip-address: true #注册时使用服务ip而不是主机名（默认使用主机名）访问到的是IP地址而不是localhost
+    instance-id: eureka-db-provider-hystrix:8091 # 带熔断机制的服务
+#    instance-id: eureka-db-provider:8091 #服务名修改（在eureka中的服务名
+
+  client:
+    service-url:
+      register-with-eureka: true #将自己注册到eureka上
+      fetch-registry: false #不从eureka上获取信息
+      defaultZone: http://eureka8761.com:8761/eureka #注册中心地址
+      # 集群版
+#      defaultZone: http://eureka8761.com:8761/eureka,http://eureka8762.com:8762/eureka,http://eureka8763.com:8763/eureka
+
+
+
+
+info:
+  app.name: simple-design-db
+  company.name: www.wzb.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+# 热部署
+debug: true
