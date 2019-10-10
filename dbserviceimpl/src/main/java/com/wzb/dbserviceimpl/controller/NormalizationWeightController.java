@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Satsuki
  * @time 2019/10/1 21:11
  * @description:
  */
+@RestController
+@RequestMapping("/normalization_weight")
 public class NormalizationWeightController implements NormalizationWeightDBService {
 
     @Autowired

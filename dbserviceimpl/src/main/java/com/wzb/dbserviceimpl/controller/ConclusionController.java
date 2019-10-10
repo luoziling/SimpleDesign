@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ import java.util.List;
  * @time 2019/10/1 21:09
  * @description:
  */
+@RestController
+@RequestMapping("/conclusion")
 public class ConclusionController implements ConclusionDBService {
 
     @Autowired

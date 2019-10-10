@@ -3,13 +3,12 @@ package com.wzb.businessservice.impl;
 import com.netflix.discovery.converters.Auto;
 import com.wzb.businessservice.CalculationService;
 import com.wzb.businessservice.feignservice.*;
+import com.wzb.businessservice.utils.RegexUtil;
 import com.wzb.common.NWResult;
 import com.wzb.common.RI;
-import com.wzb.pojo.AdjacentClosure;
-import com.wzb.pojo.Conclusion;
-import com.wzb.pojo.NormalizationWeight;
-import com.wzb.pojo.TreeNodeContent;
+import com.wzb.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ import java.util.List;
  * @time 2019/10/1 19:01
  * @description:
  */
+@Service
 public class CalculationServiceImpl implements CalculationService {
 
     @Autowired
@@ -35,6 +35,12 @@ public class CalculationServiceImpl implements CalculationService {
 
     @Autowired
     private NormalizationWeightDBService normalizationWeightDBService;
+
+    @Autowired
+    private DocInfo2DBservice docInfo2DBservice;
+
+    @Autowired
+    private MatrixStorageDBService matrixStorageDBService;
 
     @Override
     public NWResult NWCalculation(Double[][] data) {
@@ -328,6 +334,106 @@ public class CalculationServiceImpl implements CalculationService {
             conclusionDBService.updByConclusion(myCon);
 //            conclusionDao.update(myCon);
         }
+
+    }
+
+    @Override
+    public void criConCalculation() {
+        //从doc_info2表中获取前十位医生的数据
+        List<DocInfo2> docList = docInfo2DBservice.findCountDocInfo(10);
+        System.out.println(docList.toString());
+        //转为初始矩阵（五个准则-10个结论 5个10*10的矩阵）
+        Double[][][] allData= new Double[5][10][10];
+        //将十位医生的信息转换为矩阵
+        //取出五个准则的数据
+        Double[][] criterionData = new Double[5][10];
+        DocInfo2 docInfo2 = null;
+        //五行分别代表物种准则:预约量，问诊量，综合评分，视话价格，图文价格
+        List<String> criterionList = new ArrayList<>();
+        criterionList.add("预约量");
+        criterionList.add("问诊量");
+        criterionList.add("综合评分");
+        criterionList.add("视话价格");
+        criterionList.add("图文价格");
+        for (int i = 0; i < 10; i++) {
+            docInfo2 = docList.get(i);
+            criterionData[0][i] = Double.parseDouble(docInfo2.getNapm());
+            criterionData[1][i] = Double.parseDouble(docInfo2.getNacc());
+            criterionData[2][i] = Double.parseDouble(docInfo2.getErate());
+            //视话价格，图文价格带了钱的中文字符需要使用正则表达式截取数字
+            criterionData[3][i] = Double.parseDouble(RegexUtil.getNumbers(docInfo2.getShihuaprice()));
+            criterionData[4][i] = Double.parseDouble(RegexUtil.getNumbers(docInfo2.getTuweiprice()));
+        }
+
+        Double[] currentCriterion = new Double[10];
+        MatrixStorage matrixStorage = new MatrixStorage();
+        String projectName = projectInformationDBService.selNowModel().getProjectName();
+        for (int i = 0; i < 5; i++) {
+            // 使用currentCriterion将准则数据分为五份分别对比插入正确位置
+            currentCriterion = criterionData[i];
+            for (int j = 0; j < 10; j++) {
+                for (int k = 0; k < 10; k++) {
+                    // 只需输入上三角数据
+                    // 对称轴数据为1下三角数据为上三角倒数
+                    // 层次分析法不存在负数，只有(1,+..)以及(0,1)两种数罢了
+                    if (j<k){
+                        //上三角
+                        allData[i][j][k] = currentCriterion[j]/currentCriterion[k];
+                    }else if (j==k){
+                        //对角线
+                        allData[i][j][k] = 1.0;
+                    }else {
+                        //下三角
+                        allData[i][j][k] = 1.0/allData[i][k][j];
+                    }
+
+                    //保存初始矩阵 一共存储500条记录
+                    //存入数据库
+                    matrixStorage.setProjectName(projectName);
+                    matrixStorage.setI(j);
+                    matrixStorage.setJ(k);
+                    matrixStorage.setMatrixValue(allData[i][j][k]);
+//                    matrixStorage.setUsername(""); //user先不做设定
+                    matrixStorage.setValue(criterionList.get(i));
+                    matrixStorageDBService.insOrUpdByMS(matrixStorage);
+
+
+                }
+            }
+        }
+        //若结论过多，存储的数据量将十分庞大
+
+        //保存初始矩阵 一共存储500条记录
+
+        //一开始有5条10*10
+        //归一后得到权重变为五条10*1
+        //结合成10*5的矩阵
+        //一共要录入五十条数据
+        //计算归一权重
+        //计算WC
+        NormalizationWeight myNW = new NormalizationWeight();
+        String nowCriterion = null;
+        String nextValue = null;
+        NWResult nwResult = null;
+        for (int i = 0; i < 5; i++) {
+            //这是 value
+            nowCriterion = criterionList.get(i);
+            //计算权重
+            nwResult = this.NWCalculation(allData[i]);
+            for (int j = 0; j < 10; j++) {
+                //医生名（结论名）就是所需的nextValue
+                nextValue = docList.get(j).getDocname();
+                myNW.setValue(nowCriterion);
+                myNW.setNextValue(nextValue);
+                myNW.setProjectName(projectName);
+                myNW.setWeight(nwResult.getW()[j]);
+                //保存归一化后的权重数据
+                normalizationWeightDBService.insOrUpdByNW(myNW);
+            }
+
+        }
+        //保存归一化后的权重数据
+
 
     }
 }

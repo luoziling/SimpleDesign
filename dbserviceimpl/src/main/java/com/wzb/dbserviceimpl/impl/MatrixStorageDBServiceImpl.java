@@ -6,6 +6,7 @@ import com.wzb.dbserviceimpl.mapper.MatrixStorageMapper;
 import com.wzb.pojo.MatrixStorage;
 import com.wzb.pojo.MatrixStorageExample;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @time 2019/10/1 19:38
  * @description:
  */
+@Primary
 public class MatrixStorageDBServiceImpl implements MatrixStorageDBService {
 
     @Autowired

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzb.dbserviceimpl.mapper.DocInfo2Mapper" >
+  <resultMap id="BaseResultMap" type="com.wzb.pojo.DocInfo2" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="docname" property="docname" jdbcType="VARCHAR" />
+    <result column="docid" property="docid" jdbcType="VARCHAR" />
+    <result column="departments" property="departments" jdbcType="VARCHAR" />
+    <result column="occ" property="occ" jdbcType="VARCHAR" />
+    <result column="nApm" property="napm" jdbcType="VARCHAR" />
+    <result column="nAcc" property="nacc" jdbcType="VARCHAR" />
+    <result column="eRate" property="erate" jdbcType="VARCHAR" />
+    <result column="tuweiPrice" property="tuweiprice" jdbcType="VARCHAR" />
+    <result column="shihuaPrice" property="shihuaprice" jdbcType="VARCHAR" />
+    <result column="nComment" property="ncomment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, docname, docid, departments, occ, nApm, nAcc, eRate, tuweiPrice, shihuaPrice, 
+    nComment
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wzb.pojo.DocInfo2Example" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from doc_info2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_info2
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from doc_info2
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzb.pojo.DocInfo2Example" >
+    delete from doc_info2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzb.pojo.DocInfo2" >
+    insert into doc_info2 (id, docname, docid, 
+      departments, occ, nApm, 
+      nAcc, eRate, tuweiPrice, 
+      shihuaPrice, nComment)
+    values (#{id,jdbcType=INTEGER}, #{docname,jdbcType=VARCHAR}, #{docid,jdbcType=VARCHAR}, 
+      #{departments,jdbcType=VARCHAR}, #{occ,jdbcType=VARCHAR}, #{napm,jdbcType=VARCHAR}, 
+      #{nacc,jdbcType=VARCHAR}, #{erate,jdbcType=VARCHAR}, #{tuweiprice,jdbcType=VARCHAR}, 
+      #{shihuaprice,jdbcType=VARCHAR}, #{ncomment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzb.pojo.DocInfo2" >
+    insert into doc_info2
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="docname != null" >
+        docname,
+      </if>
+      <if test="docid != null" >
+        docid,
+      </if>
+      <if test="departments != null" >
+        departments,
+      </if>
+      <if test="occ != null" >
+        occ,
+      </if>
+      <if test="napm != null" >
+        nApm,
+      </if>
+      <if test="nacc != null" >
+        nAcc,
+      </if>
+      <if test="erate != null" >
+        eRate,
+      </if>
+      <if test="tuweiprice != null" >
+        tuweiPrice,
+      </if>
+      <if test="shihuaprice != null" >
+        shihuaPrice,
+      </if>
+      <if test="ncomment != null" >
+        nComment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="docname != null" >
+        #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="docid != null" >
+        #{docid,jdbcType=VARCHAR},
+      </if>
+      <if test="departments != null" >
+        #{departments,jdbcType=VARCHAR},
+      </if>
+      <if test="occ != null" >
+        #{occ,jdbcType=VARCHAR},
+      </if>
+      <if test="napm != null" >
+        #{napm,jdbcType=VARCHAR},
+      </if>
+      <if test="nacc != null" >
+        #{nacc,jdbcType=VARCHAR},
+      </if>
+      <if test="erate != null" >
+        #{erate,jdbcType=VARCHAR},
+      </if>
+      <if test="tuweiprice != null" >
+        #{tuweiprice,jdbcType=VARCHAR},
+      </if>
+      <if test="shihuaprice != null" >
+        #{shihuaprice,jdbcType=VARCHAR},
+      </if>
+      <if test="ncomment != null" >
+        #{ncomment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzb.pojo.DocInfo2Example" resultType="java.lang.Integer" >
+    select count(*) from doc_info2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update doc_info2
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.docname != null" >
+        docname = #{record.docname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docid != null" >
+        docid = #{record.docid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departments != null" >
+        departments = #{record.departments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.occ != null" >
+        occ = #{record.occ,jdbcType=VARCHAR},
+      </if>
+      <if test="record.napm != null" >
+        nApm = #{record.napm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nacc != null" >
+        nAcc = #{record.nacc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.erate != null" >
+        eRate = #{record.erate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tuweiprice != null" >
+        tuweiPrice = #{record.tuweiprice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shihuaprice != null" >
+        shihuaPrice = #{record.shihuaprice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ncomment != null" >
+        nComment = #{record.ncomment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update doc_info2
+    set id = #{record.id,jdbcType=INTEGER},
+      docname = #{record.docname,jdbcType=VARCHAR},
+      docid = #{record.docid,jdbcType=VARCHAR},
+      departments = #{record.departments,jdbcType=VARCHAR},
+      occ = #{record.occ,jdbcType=VARCHAR},
+      nApm = #{record.napm,jdbcType=VARCHAR},
+      nAcc = #{record.nacc,jdbcType=VARCHAR},
+      eRate = #{record.erate,jdbcType=VARCHAR},
+      tuweiPrice = #{record.tuweiprice,jdbcType=VARCHAR},
+      shihuaPrice = #{record.shihuaprice,jdbcType=VARCHAR},
+      nComment = #{record.ncomment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzb.pojo.DocInfo2" >
+    update doc_info2
+    <set >
+      <if test="docname != null" >
+        docname = #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="docid != null" >
+        docid = #{docid,jdbcType=VARCHAR},
+      </if>
+      <if test="departments != null" >
+        departments = #{departments,jdbcType=VARCHAR},
+      </if>
+      <if test="occ != null" >
+        occ = #{occ,jdbcType=VARCHAR},
+      </if>
+      <if test="napm != null" >
+        nApm = #{napm,jdbcType=VARCHAR},
+      </if>
+      <if test="nacc != null" >
+        nAcc = #{nacc,jdbcType=VARCHAR},
+      </if>
+      <if test="erate != null" >
+        eRate = #{erate,jdbcType=VARCHAR},
+      </if>
+      <if test="tuweiprice != null" >
+        tuweiPrice = #{tuweiprice,jdbcType=VARCHAR},
+      </if>
+      <if test="shihuaprice != null" >
+        shihuaPrice = #{shihuaprice,jdbcType=VARCHAR},
+      </if>
+      <if test="ncomment != null" >
+        nComment = #{ncomment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzb.pojo.DocInfo2" >
+    update doc_info2
+    set docname = #{docname,jdbcType=VARCHAR},
+      docid = #{docid,jdbcType=VARCHAR},
+      departments = #{departments,jdbcType=VARCHAR},
+      occ = #{occ,jdbcType=VARCHAR},
+      nApm = #{napm,jdbcType=VARCHAR},
+      nAcc = #{nacc,jdbcType=VARCHAR},
+      eRate = #{erate,jdbcType=VARCHAR},
+      tuweiPrice = #{tuweiprice,jdbcType=VARCHAR},
+      shihuaPrice = #{shihuaprice,jdbcType=VARCHAR},
+      nComment = #{ncomment,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

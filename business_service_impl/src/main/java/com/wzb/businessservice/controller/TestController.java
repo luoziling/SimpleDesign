@@ -1,5 +1,7 @@
 package com.wzb.businessservice.controller;
 
+import com.wzb.businessservice.CalculationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,8 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
+    @Autowired
+    private CalculationService calculationService;
+
     @RequestMapping("/testC")
     public String testC(){
         return "Hello Eureka";
+    }
+
+    @RequestMapping("/test_cri")
+    public void criConCalculation(){
+        calculationService.criConCalculation();
     }
 }

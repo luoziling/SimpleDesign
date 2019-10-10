@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ import java.util.List;
  * @time 2019/10/1 21:10
  * @description:
  */
+@RestController
+@RequestMapping("/matrix_storage")
 public class MatrixStorageController implements MatrixStorageDBService {
 
     @Autowired

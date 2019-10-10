@@ -7,6 +7,8 @@ import com.wzb.dbserviceimpl.mapper.ProjectInformationMapper;
 import com.wzb.pojo.ProjectInformation;
 import com.wzb.pojo.ProjectInformationExample;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,14 +39,16 @@ import java.util.List;
  * DEFAULT:默认值，由底层数据库自动判断应该使用什么隔离级别
  *
  */
-
+@Primary
 @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 36000,rollbackFor = Exception.class)
 @Repository
 public class ProjectInformationDBServiceImpl implements ProjectInformationDBService {
 
+
     @Autowired
     private ProjectInformationMapper projectInformationMapper;
 
+    @Lazy
     @Autowired
     private TreeNodeDBService treeNodeDBService;
 

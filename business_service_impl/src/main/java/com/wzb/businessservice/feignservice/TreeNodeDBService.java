@@ -15,7 +15,7 @@ import java.util.List;
  * @description:
  */
 @FeignClient(value = "EUREKA-DB-PROVIDER")
-@RequestMapping("/TreeNodeContent")
+@RequestMapping("/treenode_content")
 public interface TreeNodeDBService {
 
     /**

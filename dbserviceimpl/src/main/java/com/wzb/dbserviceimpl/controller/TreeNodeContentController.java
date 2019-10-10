@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @description:
  */
 @RestController
-@RequestMapping("/TreeNodeContent")
+@RequestMapping("/treenode_Content")
 public class TreeNodeContentController implements TreeNodeDBService {
     @Resource
     private TreeNodeDBService treeNodeDBService;

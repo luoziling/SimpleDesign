@@ -6,6 +6,7 @@ import com.wzb.dbserviceimpl.mapper.ConclusionMapper;
 import com.wzb.pojo.Conclusion;
 import com.wzb.pojo.ConclusionExample;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +20,7 @@ import java.util.List;
  * @time 2019/9/24 22:09
  * @description:
  */
+@Primary
 @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 36000,rollbackFor = Exception.class)
 @Repository
 public class ConclusionDBServiceImpl implements ConclusionDBService {

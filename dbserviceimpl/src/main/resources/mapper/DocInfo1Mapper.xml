@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzb.dbserviceimpl.mapper.DocInfo1Mapper" >
+  <resultMap id="BaseResultMap" type="com.wzb.pojo.DocInfo1" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="docname" property="docname" jdbcType="VARCHAR" />
+    <result column="docid" property="docid" jdbcType="VARCHAR" />
+    <result column="dochospital" property="dochospital" jdbcType="VARCHAR" />
+    <result column="科室" property="科室" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, docname, docid, dochospital, 科室
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wzb.pojo.DocInfo1Example" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from doc_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_info1
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from doc_info1
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzb.pojo.DocInfo1Example" >
+    delete from doc_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzb.pojo.DocInfo1" >
+    insert into doc_info1 (id, docname, docid, 
+      dochospital, 科室)
+    values (#{id,jdbcType=INTEGER}, #{docname,jdbcType=VARCHAR}, #{docid,jdbcType=VARCHAR}, 
+      #{dochospital,jdbcType=VARCHAR}, #{科室,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzb.pojo.DocInfo1" >
+    insert into doc_info1
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="docname != null" >
+        docname,
+      </if>
+      <if test="docid != null" >
+        docid,
+      </if>
+      <if test="dochospital != null" >
+        dochospital,
+      </if>
+      <if test="科室 != null" >
+        科室,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="docname != null" >
+        #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="docid != null" >
+        #{docid,jdbcType=VARCHAR},
+      </if>
+      <if test="dochospital != null" >
+        #{dochospital,jdbcType=VARCHAR},
+      </if>
+      <if test="科室 != null" >
+        #{科室,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzb.pojo.DocInfo1Example" resultType="java.lang.Integer" >
+    select count(*) from doc_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update doc_info1
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.docname != null" >
+        docname = #{record.docname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docid != null" >
+        docid = #{record.docid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dochospital != null" >
+        dochospital = #{record.dochospital,jdbcType=VARCHAR},
+      </if>
+      <if test="record.科室 != null" >
+        科室 = #{record.科室,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update doc_info1
+    set id = #{record.id,jdbcType=INTEGER},
+      docname = #{record.docname,jdbcType=VARCHAR},
+      docid = #{record.docid,jdbcType=VARCHAR},
+      dochospital = #{record.dochospital,jdbcType=VARCHAR},
+      科室 = #{record.科室,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzb.pojo.DocInfo1" >
+    update doc_info1
+    <set >
+      <if test="docname != null" >
+        docname = #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="docid != null" >
+        docid = #{docid,jdbcType=VARCHAR},
+      </if>
+      <if test="dochospital != null" >
+        dochospital = #{dochospital,jdbcType=VARCHAR},
+      </if>
+      <if test="科室 != null" >
+        科室 = #{科室,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzb.pojo.DocInfo1" >
+    update doc_info1
+    set docname = #{docname,jdbcType=VARCHAR},
+      docid = #{docid,jdbcType=VARCHAR},
+      dochospital = #{dochospital,jdbcType=VARCHAR},
+      科室 = #{科室,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

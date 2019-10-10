@@ -5,6 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -37,5 +38,5 @@ public interface AdjacentClosureDBService {
     public int insByAC(@RequestBody AdjacentClosure adjacentClosure);
 
     @RequestMapping(value = "/delByAD",method = RequestMethod.POST)
-    public int delByAD(@RequestBody Integer ancestor,@RequestBody Integer descendant);
+    public int delByAD(@RequestParam("value") Integer ancestor,@RequestParam("descendant") Integer descendant);
 }
