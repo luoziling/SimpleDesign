@@ -27,5 +27,5 @@ public interface ConclusionDBService {
     public int delByPlan(@RequestBody String plan);
 
     @RequestMapping(value = "/updByConclusion",method = RequestMethod.POST)
-    public int updByConclusion(Conclusion conclusion);
+    public int updByConclusion(@RequestBody Conclusion conclusion);
 }

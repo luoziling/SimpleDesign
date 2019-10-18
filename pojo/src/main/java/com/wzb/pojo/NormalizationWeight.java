@@ -50,4 +50,15 @@ public class NormalizationWeight {
     public void setWeight(Double weight) {
         this.weight = weight;
     }
+
+    @Override
+    public String toString() {
+        return "NormalizationWeight{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", value='" + value + '\'' +
+                ", nextValue='" + nextValue + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
 }

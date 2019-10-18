@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author Satsuki
  * @time 2019/9/24 22:08
@@ -32,9 +34,23 @@ public class NormalizationWeightDBServiceImpl implements NormalizationWeightDBSe
     public NormalizationWeight selByNodeValue(String nowValue) {
         NormalizationWeight normalizationWeight = new NormalizationWeight();
         NormalizationWeightExample example = new NormalizationWeightExample();
-        example.createCriteria().andProjectNameEqualTo(projectInformationDBService.selNowModel().getProjectName())
+        String projectName = projectInformationDBService.selNowModel().getProjectName();
+        System.out.println("projectName:" + projectName);
+        System.out.println("nowValue:" + nowValue);
+        //todo:错误发现这边要求nextValue传递过来的却找不到
+        example.createCriteria().andProjectNameEqualTo(projectName)
                 .andNextValueEqualTo(nowValue);
-        normalizationWeight = normalizationWeightMapper.selectByExample(example).get(0);
+
+//        example.createCriteria().andProjectNameEqualTo(projectName).andNextValueEqualTo()
+
+        List<NormalizationWeight> normalizationWeights = normalizationWeightMapper.selectByExample(example);
+
+        System.out.println("normalizationWeights:"+normalizationWeights.toString());
+        if (normalizationWeights.size()>0){
+            normalizationWeight = normalizationWeights.get(0);
+        }else {
+            normalizationWeight = null;
+        }
         return normalizationWeight;
     }
 
@@ -53,18 +69,42 @@ public class NormalizationWeightDBServiceImpl implements NormalizationWeightDBSe
         NormalizationWeightExample example = new NormalizationWeightExample();
         example.createCriteria().andProjectNameEqualTo(projectInformationDBService.selNowModel().getProjectName())
                 .andValueEqualTo(value).andNextValueEqualTo(nextValue);
-        return normalizationWeightMapper.selectByExample(example).get(0);
+        List<NormalizationWeight> list = normalizationWeightMapper.selectByExample(example);
+        if(list.size()>0){
+            System.out.println("找到了selByTwoValue！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+            return list.get(0);
+        }else {
+            System.out.println("未找到selByTwoValue！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+            return null;
+        }
+//        return normalizationWeightMapper.selectByExample(example).get(0);
     }
 
     @Override
     public int insOrUpdByNW(NormalizationWeight normalizationWeight) {
-        NormalizationWeight saved = this.selByTwoValue(normalizationWeight.getValue(), normalizationWeight.getNextValue());
-        if (saved!=null){
-            //如果保存过则更新
-            return normalizationWeightMapper.updateByExample(normalizationWeight,new NormalizationWeightExample());
-        }else {
-            //如果未保存则插入
-            return normalizationWeightMapper.insert(normalizationWeight);
+
+        synchronized (this){
+            NormalizationWeight saved = this.selByTwoValue(normalizationWeight.getValue(), normalizationWeight.getNextValue());
+
+            if (saved!=null){
+                System.out.println("update!!!!!!!!!!!!!!!!!!!!!!!!" + saved.toString());
+                //弄反了
+//                saved.setId(normalizationWeight.getId());
+//                //如果保存过则更新
+//                return normalizationWeightMapper.updateByPrimaryKey(saved);
+                // 获取已保存的数据ID
+                normalizationWeight.setId(saved.getId());
+                //如果保存过则更新
+                // 保存新数据进行更新
+                return normalizationWeightMapper.updateByPrimaryKey(normalizationWeight);
+//            return normalizationWeightMapper.updateByExample(normalizationWeight,new NormalizationWeightExample());
+
+            }else {
+                System.out.println("null"+ "insert!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                //如果未保存则插入
+                return normalizationWeightMapper.insert(normalizationWeight);
+            }
         }
+
     }
 }

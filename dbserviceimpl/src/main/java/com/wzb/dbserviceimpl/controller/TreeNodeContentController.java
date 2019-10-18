@@ -2,12 +2,10 @@ package com.wzb.dbserviceimpl.controller;
 
 import com.wzb.dbservice.TreeNodeDBService;
 import com.wzb.pojo.TreeNodeContent;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Satsuki
@@ -15,7 +13,7 @@ import javax.annotation.Resource;
  * @description:
  */
 @RestController
-@RequestMapping("/treenode_Content")
+@RequestMapping("/treenode_content")
 public class TreeNodeContentController implements TreeNodeDBService {
     @Resource
     private TreeNodeDBService treeNodeDBService;
@@ -25,21 +23,21 @@ public class TreeNodeContentController implements TreeNodeDBService {
         treeNodeDBService.insInitial(projectName);
     }
 
-    @RequestMapping(value = "/selById", method = RequestMethod.GET)
+    @RequestMapping(value = "/selById/{id}", method = RequestMethod.GET)
     @Override
-    public TreeNodeContent selById(Integer id) {
+    public TreeNodeContent selById(@PathVariable(value = "id") Integer id) {
         return treeNodeDBService.selById(id);
     }
 
-    @RequestMapping(value = "/selIdByContent",method = RequestMethod.GET)
+    @RequestMapping(value = "/selIdByContent/{nodeValue}",method = RequestMethod.GET)
     @Override
-    public Integer selIdByContent(String nodeValue) {
+    public Integer selIdByContent(@PathVariable(value = "nodeValue") String nodeValue) {
         return treeNodeDBService.selIdByContent(nodeValue);
     }
 
-    @RequestMapping(value = "/selByContent",method = RequestMethod.GET)
+    @RequestMapping(value = "/selByContent/{model_name}",method = RequestMethod.GET)
     @Override
-    public TreeNodeContent selByContent(String value) {
+    public TreeNodeContent selByContent(@PathVariable(value = "model_name") String value) {
         return treeNodeDBService.selByContent(value);
     }
 
@@ -53,5 +51,12 @@ public class TreeNodeContentController implements TreeNodeDBService {
     @Override
     public int delById(@RequestBody Integer id) {
         return treeNodeDBService.delById(id);
+    }
+
+    @RequestMapping(value = "/selByPI/{projectName}",method = RequestMethod.GET)
+    @Override
+    public List<TreeNodeContent> selByPI(@PathVariable("projectName") String projectName) {
+        System.out.println("projectName:" + projectName);
+        return treeNodeDBService.selByPI(projectName);
     }
 }

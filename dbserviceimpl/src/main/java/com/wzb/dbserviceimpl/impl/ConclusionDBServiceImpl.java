@@ -54,6 +54,7 @@ public class ConclusionDBServiceImpl implements ConclusionDBService {
 
     @Override
     public int updByConclusion(Conclusion conclusion) {
-        return conclusionMapper.updateByExample(conclusion,new ConclusionExample());
+//        return conclusionMapper.updateByExample(conclusion,new ConclusionExample());
+        return conclusionMapper.updateByPrimaryKey(conclusion);
     }
 }

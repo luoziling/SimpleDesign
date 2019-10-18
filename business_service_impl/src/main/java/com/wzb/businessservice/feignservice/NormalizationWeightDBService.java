@@ -2,10 +2,7 @@ package com.wzb.businessservice.feignservice;
 
 import com.wzb.pojo.NormalizationWeight;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Satsuki
@@ -15,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "EUREKA-DB-PROVIDER")
 @RequestMapping("/normalization_weight")
 public interface NormalizationWeightDBService {
-    @RequestMapping(value = "/selByNodeValue",method = RequestMethod.GET)
-    public NormalizationWeight selByNodeValue(String nowValue);
+    @RequestMapping(value = "/selByNodeValue/{nowValue}",method = RequestMethod.GET)
+    public NormalizationWeight selByNodeValue(@PathVariable(value = "nowValue") String nowValue);
 
     @RequestMapping(value = "/selByValueAndPlan",method = RequestMethod.GET)
     public NormalizationWeight selByValueAndPlan(@RequestParam("nowValue") String nowValue,@RequestParam("plan") String plan);
@@ -25,5 +22,5 @@ public interface NormalizationWeightDBService {
     public NormalizationWeight selByTwoValue(@RequestParam("value") String value,@RequestParam("nextValue") String nextValue);
 
     @RequestMapping(value = "/insOrUpdByNW",method = RequestMethod.POST)
-    public int insOrUpdByNW(NormalizationWeight normalizationWeight);
+    public int insOrUpdByNW(@RequestBody NormalizationWeight normalizationWeight);
 }

@@ -31,9 +31,26 @@ public interface MatrixStorageDBService {
     MatrixStorage selByNodeValue(int i,int j,String nodeValue,String username);
 
     /**
+     * 要使用insertOrReplace
+     * 根据其他的所有属性查询有没有相同的ID
+     * @param i
+     * @param j
+     * @param nodeValue
+     * @param projectName
+     * @return
+     */
+    MatrixStorage selByNodeValue1(int i,int j,String nodeValue,String projectName);
+
+    /**
      * 插入或更新一条记录
      * @param matrixStorage
      * @return
      */
     int insOrUpdByMS(MatrixStorage matrixStorage);
+
+    /**
+     * 测试用
+     * @return
+     */
+    String test11();
 }

@@ -2,10 +2,7 @@ package com.wzb.dbserviceimpl.controller;
 
 import com.wzb.dbservice.AdjacentClosureDBService;
 import com.wzb.pojo.AdjacentClosure;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,15 +36,15 @@ public class AdjacentClosureController implements AdjacentClosureDBService {
         return adjacentClosureDBService.selOneDepthNode();
     }
 
-    @RequestMapping(value = "/selByAncestor",method = RequestMethod.GET)
+    @RequestMapping(value = "/selByAncestor/{ancestor}",method = RequestMethod.GET)
     @Override
-    public List<AdjacentClosure> selByAncestor(Integer ancestor) {
+    public List<AdjacentClosure> selByAncestor(@PathVariable(value = "ancestor") Integer ancestor) {
         return adjacentClosureDBService.selByAncestor(ancestor);
     }
 
-    @RequestMapping(value = "/selByDescendant",method = RequestMethod.GET)
+    @RequestMapping(value = "/selByDescendant/{descendant}",method = RequestMethod.GET)
     @Override
-    public AdjacentClosure selByDescendant(Integer descendant) {
+    public AdjacentClosure selByDescendant(@PathVariable(value = "descendant") Integer descendant) {
         return adjacentClosureDBService.selByDescendant(descendant);
     }
 

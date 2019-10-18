@@ -50,4 +50,15 @@ public class DocInfo1 {
     public void set科室(String 科室) {
         this.科室 = 科室 == null ? null : 科室.trim();
     }
+
+    @Override
+    public String toString() {
+        return "DocInfo1{" +
+                "id=" + id +
+                ", docname='" + docname + '\'' +
+                ", docid='" + docid + '\'' +
+                ", dochospital='" + dochospital + '\'' +
+                ", 科室='" + 科室 + '\'' +
+                '}';
+    }
 }

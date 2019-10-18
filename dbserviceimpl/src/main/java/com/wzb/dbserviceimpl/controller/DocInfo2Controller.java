@@ -33,4 +33,10 @@ public class DocInfo2Controller implements DocInfo2DBService {
     public List<DocInfo2> findCountDocInfo(@PathVariable("count") int count) {
         return docInfo2DBService.findCountDocInfo(count);
     }
+
+    @RequestMapping(value = "/findById/{id}",method = RequestMethod.GET)
+    @Override
+    public DocInfo2 findById(@PathVariable(value = "id") int id) {
+        return docInfo2DBService.findById(id);
+    }
 }

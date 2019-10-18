@@ -129,7 +129,7 @@ public class ProjectInformationDBServiceImpl implements ProjectInformationDBServ
 
     @Override
     public ProjectInformation selNowModel() {
-        //将ID为1的数据项定位保存当前项目信息的数据项
-        return projectInformationMapper.selectByPrimaryKey(1);
+        //将ID为n的数据项定位保存当前项目信息的数据项
+        return projectInformationMapper.selectByPrimaryKey(10004);
     }
 }

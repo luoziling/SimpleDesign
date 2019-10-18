@@ -6,9 +6,14 @@ import com.wzb.businessservice.feignservice.*;
 import com.wzb.businessservice.utils.RegexUtil;
 import com.wzb.common.NWResult;
 import com.wzb.common.RI;
+import com.wzb.common.RootCriData;
 import com.wzb.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+//import org.springframework.transaction.annotation.Isolation;
+//import org.springframework.transaction.annotation.Propagation;
+//import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +23,8 @@ import java.util.List;
  * @time 2019/10/1 19:01
  * @description:
  */
+//@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 36000,rollbackFor = Exception.class)
+@Primary
 @Service
 public class CalculationServiceImpl implements CalculationService {
 
@@ -98,6 +105,8 @@ public class CalculationServiceImpl implements CalculationService {
         }
         //计算判断矩阵最大特征根lambda λmax
         //λmax = 1/n * ∑i=1到n  ∑j=1到n a[i][j]*W[j] /W[i]
+
+        //后续可以考虑用另一种方式计算lambda
         Double lambdaMax = 0.0;
         //求和置零
         sum0 = 0.0;
@@ -190,7 +199,12 @@ public class CalculationServiceImpl implements CalculationService {
 //        Long nodeID;
         String nowValue;
 
+        // 根据结论中plan 作为医生ID搜索医生信息
+        DocInfo2 docInfo2;
+
         for(int i = 0;i<deepest.size();i++){
+            //todo:这里开始可能出现问题
+
             //获取当前节点ID
             AdjacentClosure nowA = deepest.get(i);
 //            nodeID = Long.valueOf(nowA.getDescendant());
@@ -205,7 +219,6 @@ public class CalculationServiceImpl implements CalculationService {
             System.out.println("myTreeNode:"+myTreeNode.toString());
             nowValue = myTreeNode.getValue();
             //从归一权重中取值
-
             NormalizationWeight normalizationWeight = normalizationWeightDBService.selByNodeValue(nowValue);
 //            QueryBuilder<NormalizationWeight> nqb = normalizationWeightDao.queryBuilder();
 //            normalizationWeight = nqb.where(nqb.and(NormalizationWeightDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
@@ -220,12 +233,20 @@ public class CalculationServiceImpl implements CalculationService {
             for(int j = 0;j<conList.size();j++){
 //                nqb=normalizationWeightDao.queryBuilder();
 //                Log.e("nqb1",nqb.list().toString());
-                System.out.println("nowValue:>"+nowValue);
+                System.out.println("nowValue:"+nowValue);
 //                Log.e("nowValue",nowValue);
                 System.out.println("conList.get(j):"+conList.get(j).toString());
 //                Log.e("conList.get(j)",conList.get(j).toString());
                 NormalizationWeight myNor = new NormalizationWeight();
-                myNor = normalizationWeightDBService.selByTwoValue(nowValue,conList.get(j).getPlan());
+
+                // todo: 这里要做出修改，这边的plan是医生ID而非医生姓名。根据ID搜索姓名
+                docInfo2 = docInfo2DBservice.findById(Integer.parseInt(conList.get(j).getPlan()));
+
+                //修改前
+//                myNor = normalizationWeightDBService.selByTwoValue(nowValue,conList.get(j).getPlan());
+
+                // 修改后
+                myNor = normalizationWeightDBService.selByTwoValue(nowValue,docInfo2.getDocname());
 //                myNor = nqb.where(nqb.and(NormalizationWeightDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
 //                        ,NormalizationWeightDao.Properties.Value.eq(nowValue)
 //                        ,NormalizationWeightDao.Properties.NextVlue.eq(conList.get(j).getPlan())))
@@ -331,6 +352,9 @@ public class CalculationServiceImpl implements CalculationService {
         for(int i = 0;i<resList.size();i++){
             myCon = conList.get(i);
             myCon.setPriority(Float.valueOf(resList.get(i).toString()));
+
+            // 不知道结论是否保存成功
+            System.out.println("myCon:" + myCon.toString());
             conclusionDBService.updByConclusion(myCon);
 //            conclusionDao.update(myCon);
         }
@@ -348,7 +372,7 @@ public class CalculationServiceImpl implements CalculationService {
         //取出五个准则的数据
         Double[][] criterionData = new Double[5][10];
         DocInfo2 docInfo2 = null;
-        //五行分别代表物种准则:预约量，问诊量，综合评分，视话价格，图文价格
+        //五行分别代表五种准则:预约量，问诊量，综合评分，视话价格，图文价格
         List<String> criterionList = new ArrayList<>();
         criterionList.add("预约量");
         criterionList.add("问诊量");
@@ -392,6 +416,7 @@ public class CalculationServiceImpl implements CalculationService {
                     matrixStorage.setProjectName(projectName);
                     matrixStorage.setI(j);
                     matrixStorage.setJ(k);
+
                     matrixStorage.setMatrixValue(allData[i][j][k]);
 //                    matrixStorage.setUsername(""); //user先不做设定
                     matrixStorage.setValue(criterionList.get(i));
@@ -415,6 +440,18 @@ public class CalculationServiceImpl implements CalculationService {
         String nowCriterion = null;
         String nextValue = null;
         NWResult nwResult = null;
+
+        // 输出矩阵查看
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                for (int k = 0; k < 10; k++) {
+                    System.out.print(allData[i][j][k] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+            System.out.println();
+        }
         for (int i = 0; i < 5; i++) {
             //这是 value
             nowCriterion = criterionList.get(i);
@@ -434,6 +471,87 @@ public class CalculationServiceImpl implements CalculationService {
         }
         //保存归一化后的权重数据
 
+    }
+
+    public void testBook(){
+        Double[][] data = new Double[6][6];
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (i==j){
+                    data[i][j] = 1.0;
+                }
+            }
+        }
+        data[0][1]=1.0;
+        data[1][0]=1.0;
+        data[0][2]=1.0;
+        data[2][0]=1.0;
+        data[0][3]=4.0;
+        data[3][0]=0.25;
+        data[0][4]=1.0;
+        data[4][0]=1.0;
+        data[0][5]=0.5;
+        data[5][0]=2.0;
+
+        data[1][2]=2.0;
+        data[2][1]=0.5;
+        data[1][3]=4.0;
+        data[3][1]=0.25;
+        data[1][4]=1.0;
+        data[4][1]=1.0;
+        data[1][5]=0.5;
+        data[5][1]=2.0;
+
+        data[2][3]=5.0;
+        data[3][2]=0.2;
+        data[2][4]=3.0;
+        data[4][2]=0.333;
+        data[2][5]=0.5;
+        data[5][2]=2.0;
+
+        data[3][4]=0.333;
+        data[4][3]=3.0;
+        data[3][5]=0.333;
+        data[5][3]=3.0;
+
+        data[4][5]=1.0;
+        data[5][4]=1.0;
+
+        NWResult nwResult = this.NWCalculation(data);
+
+    }
+
+    @Override
+    public void norCalAndSave(RootCriData rootCriData) {
+        Double[][] data = rootCriData.getData();
+
+        NWResult nwResult = this.NWCalculation(data);
+
+        NormalizationWeight myNW = new NormalizationWeight();
+
+//        List<TreeNodeContent> nextList = rootCriData.getNextList();
+        List<String> nextList = rootCriData.getNextList();
+
+        System.out.println("norCalAndSave1111111111111111111");
+
+        System.out.println(nwResult.toString());
+
+
+        String nextValue;
+        // 5在之后需要替换为准则个数
+        for (int j = 0; j < 5; j++) {
+            // 根节点--准则的判断矩阵
+            // 准则为nextValue
+            nextValue = nextList.get(j);
+            myNW.setValue(rootCriData.getProjectName());
+            myNW.setNextValue(nextValue);
+            myNW.setProjectName(rootCriData.getProjectName());
+            myNW.setWeight(nwResult.getW()[j]);
+
+            System.out.println("myNW:" + myNW.toString());
+            //保存归一化后的权重数据
+            normalizationWeightDBService.insOrUpdByNW(myNW);
+        }
 
     }
 }

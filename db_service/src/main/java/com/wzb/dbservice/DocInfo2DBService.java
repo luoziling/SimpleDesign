@@ -16,4 +16,6 @@ public interface DocInfo2DBService {
      * @return
      */
     List<DocInfo2> findCountDocInfo(int count);
+
+    DocInfo2 findById(int id);
 }

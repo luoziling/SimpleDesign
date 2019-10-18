@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@EnableDiscoveryClient
 @SpringBootApplication
 @EnableCircuitBreaker //熔断机制，类似AOP的异常处理
-public class DbserviceimplApplication {
+public class    DbserviceimplApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DbserviceimplApplication.class, args);

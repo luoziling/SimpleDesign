@@ -3,6 +3,7 @@ package com.wzb.businessservice.feignservice;
 import com.wzb.pojo.ProjectInformation;
 import com.wzb.pojo.TreeNodeContent;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,19 +26,22 @@ public interface TreeNodeDBService {
     @RequestMapping("/insInitial")
     void insInitial(String projectName);
 
-    @RequestMapping(value = "/selById", method = RequestMethod.GET)
-    public TreeNodeContent selById(Integer id);
+    @RequestMapping(value = "/selById/{id}", method = RequestMethod.GET)
+    public TreeNodeContent selById(@PathVariable(value = "id") Integer id);
 
-    @RequestMapping(value = "/selIdByContent",method = RequestMethod.GET)
-    public Integer selIdByContent(String nodeValue);
+    @RequestMapping(value = "/selIdByContent/{nodeValue}",method = RequestMethod.GET)
+    public Integer selIdByContent(@PathVariable(value = "nodeValue") String nodeValue);
 
-    @RequestMapping(value = "/selByContent",method = RequestMethod.GET)
-    public TreeNodeContent selByContent(String value);
+    @RequestMapping(value = "/selByContent/{model_name}",method = RequestMethod.GET)
+    public TreeNodeContent selByContent(@PathVariable(value = "model_name") String value);
 
     @RequestMapping(value = "/insByTN",method = RequestMethod.POST)
     public int insByTN(@RequestBody TreeNodeContent treeNodeContent);
 
     @RequestMapping(value = "/delById",method = RequestMethod.POST)
     public int delById(@RequestBody Integer id);
+
+    @RequestMapping(value = "/selByPI/{projectName}",method = RequestMethod.GET)
+    public List<TreeNodeContent> selByPI(@PathVariable(value = "projectName") String projectName);
 
 }

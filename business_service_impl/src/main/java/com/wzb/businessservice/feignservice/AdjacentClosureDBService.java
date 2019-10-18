@@ -2,10 +2,7 @@ package com.wzb.businessservice.feignservice;
 
 import com.wzb.pojo.AdjacentClosure;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,11 +25,11 @@ public interface AdjacentClosureDBService {
     @RequestMapping(value = "/selOneDepthNode",method = RequestMethod.GET)
     public List<AdjacentClosure> selOneDepthNode();
 
-    @RequestMapping(value = "/selByAncestor",method = RequestMethod.GET)
-    public List<AdjacentClosure> selByAncestor(Integer ancestor) ;
+    @RequestMapping(value = "/selByAncestor/{ancestor}",method = RequestMethod.GET)
+    public List<AdjacentClosure> selByAncestor(@PathVariable(value = "ancestor") Integer ancestor) ;
 
-    @RequestMapping(value = "/selByDescendant",method = RequestMethod.GET)
-    public AdjacentClosure selByDescendant(Integer descendant);
+    @RequestMapping(value = "/selByDescendant/{descendant}",method = RequestMethod.GET)
+    public AdjacentClosure selByDescendant(@PathVariable(value = "descendant") Integer descendant);
 
     @RequestMapping(value = "/insByAC",method = RequestMethod.POST)
     public int insByAC(@RequestBody AdjacentClosure adjacentClosure);

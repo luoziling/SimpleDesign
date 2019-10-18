@@ -43,6 +43,7 @@ public class ConclusionController implements ConclusionDBService {
     @RequestMapping(value = "/updByConclusion",method = RequestMethod.POST)
     @Override
     public int updByConclusion(@RequestBody Conclusion conclusion) {
-        return 0;
+        System.out.println("updByConclusion+conclusion:"+conclusion.toString());
+        return conclusionDBService.updByConclusion(conclusion);
     }
 }

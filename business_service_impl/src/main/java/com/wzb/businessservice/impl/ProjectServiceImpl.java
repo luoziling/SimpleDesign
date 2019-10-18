@@ -2,16 +2,20 @@ package com.wzb.businessservice.impl;
 
 import com.wzb.businessservice.ProjectService;
 import com.wzb.businessservice.feignservice.AdjacentClosureDBService;
+import com.wzb.businessservice.feignservice.MatrixStorageDBService;
 import com.wzb.businessservice.feignservice.ProjectInformationDBService;
 //import com.wzb.feignapi.ProjectInformationDBService;
 import com.wzb.businessservice.feignservice.TreeNodeDBService;
+import com.wzb.pojo.MatrixStorage;
 import com.wzb.pojo.ProjectInformation;
+import com.wzb.pojo.TreeNodeContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Isolation;
+//import org.springframework.transaction.annotation.Propagation;
+//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -21,6 +25,7 @@ import java.util.List;
  * @time 2019/9/25 20:25
  * @description:
  */
+@Primary
 //@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 36000,rollbackFor = Exception.class)
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -45,6 +50,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private AdjacentClosureDBService acDBService;
+
+    @Autowired
+    private MatrixStorageDBService msDBService;
 
 
     /**
@@ -78,6 +86,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void projectCreation(String projectName) {
         piDBService.projectCreation(projectName);
+
+        //测试事务是否开启
+//        int i = 5/0;
 //        // 创建时候就添加一个根节点 并保存
 //        // 存入comment table（TreeNodeTable）与comment_path table(AdjacentClosureTable)
 //        //首先存入ProjectInformation
@@ -92,5 +103,18 @@ public class ProjectServiceImpl implements ProjectService {
 //        acDBService.insInitial(projectName);
 
 
+    }
+
+    @Override
+    public List<TreeNodeContent> getNodes(String projectName) {
+//        TreeNodeContent treeNodeContent = tnDBService.selById(9);
+//        System.out.println("treeNodeContent:" + treeNodeContent);
+        return tnDBService.selByPI(projectName);
+    }
+
+    @Override
+    public int saveMS(MatrixStorage matrixStorage) {
+        System.out.println("saveMS:" + matrixStorage.toString());
+        return msDBService.insOrUpdByMS(matrixStorage);
     }
 }

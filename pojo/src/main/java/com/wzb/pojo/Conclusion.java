@@ -40,4 +40,14 @@ public class Conclusion {
     public void setPriority(Float priority) {
         this.priority = priority;
     }
+
+    @Override
+    public String toString() {
+        return "Conclusion{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", plan='" + plan + '\'' +
+                ", priority=" + priority +
+                '}';
+    }
 }

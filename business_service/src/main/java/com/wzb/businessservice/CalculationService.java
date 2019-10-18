@@ -1,6 +1,7 @@
 package com.wzb.businessservice;
 
 import com.wzb.common.NWResult;
+import com.wzb.common.RootCriData;
 
 /**
  * @author Satsuki
@@ -24,4 +25,15 @@ public interface CalculationService {
      * 第一个上海市骨科挂号决策支持模型的计算
      */
     void criConCalculation();
+
+    /**
+     * 计算测试
+     */
+    void testBook();
+
+    /**
+     * 将输入的数值计算归一化权重并且保存
+     */
+    void norCalAndSave(RootCriData rootCriData);
+
 }

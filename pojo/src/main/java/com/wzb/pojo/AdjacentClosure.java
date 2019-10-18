@@ -50,4 +50,15 @@ public class AdjacentClosure {
     public void setDepth(Integer depth) {
         this.depth = depth;
     }
+
+    @Override
+    public String toString() {
+        return "AdjacentClosure{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", ancestor=" + ancestor +
+                ", descendant=" + descendant +
+                ", depth=" + depth +
+                '}';
+    }
 }

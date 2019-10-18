@@ -30,4 +30,13 @@ public class ProjectInformation {
     public void setLayer(Integer layer) {
         this.layer = layer;
     }
+
+    @Override
+    public String toString() {
+        return "ProjectInformation{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", layer=" + layer +
+                '}';
+    }
 }

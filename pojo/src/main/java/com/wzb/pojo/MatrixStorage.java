@@ -70,4 +70,17 @@ public class MatrixStorage {
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
     }
+
+    @Override
+    public String toString() {
+        return "MatrixStorage{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                ", i=" + i +
+                ", j=" + j +
+                ", matrixValue=" + matrixValue +
+                ", projectName='" + projectName + '\'' +
+                ", username='" + username + '\'' +
+                '}';
+    }
 }

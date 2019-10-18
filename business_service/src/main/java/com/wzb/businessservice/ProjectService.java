@@ -1,6 +1,8 @@
 package com.wzb.businessservice;
 
+import com.wzb.pojo.MatrixStorage;
 import com.wzb.pojo.ProjectInformation;
+import com.wzb.pojo.TreeNodeContent;
 
 import java.util.List;
 
@@ -21,6 +23,19 @@ public interface ProjectService {
      * @return
      */
     List<ProjectInformation> getAll();
+
+    /**
+     * 获取该项目下的所有节点
+     * @return
+     */
+    List<TreeNodeContent> getNodes(String projectName);
+
+    /**
+     * 保存判断矩阵
+     * @param matrixStorage
+     * @return
+     */
+    int saveMS(MatrixStorage matrixStorage);
 
 
 }

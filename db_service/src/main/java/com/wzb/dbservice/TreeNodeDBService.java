@@ -53,4 +53,11 @@ public interface TreeNodeDBService {
      */
     int delById(Integer id);
 
+    /**
+     * 根据项目名查找所有的节点
+     * @param projectName
+     * @return
+     */
+    List<TreeNodeContent> selByPI(String projectName);
+
 }

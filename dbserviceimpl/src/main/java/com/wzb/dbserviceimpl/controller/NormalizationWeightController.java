@@ -3,10 +3,7 @@ package com.wzb.dbserviceimpl.controller;
 import com.wzb.dbservice.NormalizationWeightDBService;
 import com.wzb.pojo.NormalizationWeight;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Satsuki
@@ -20,9 +17,9 @@ public class NormalizationWeightController implements NormalizationWeightDBServi
     @Autowired
     private NormalizationWeightDBService normalizationWeightDBService;
 
-    @RequestMapping(value = "/selByNodeValue",method = RequestMethod.GET)
+    @RequestMapping(value = "/selByNodeValue/{nowValue}",method = RequestMethod.GET)
     @Override
-    public NormalizationWeight selByNodeValue(String nowValue) {
+    public NormalizationWeight selByNodeValue(@PathVariable(value = "nowValue") String nowValue) {
         return normalizationWeightDBService.selByNodeValue(nowValue);
     }
 
@@ -41,6 +38,7 @@ public class NormalizationWeightController implements NormalizationWeightDBServi
     @RequestMapping(value = "/insOrUpdByNW",method = RequestMethod.POST)
     @Override
     public int insOrUpdByNW(@RequestBody NormalizationWeight normalizationWeight) {
+        System.out.println(normalizationWeight);
         return normalizationWeightDBService.insOrUpdByNW(normalizationWeight);
     }
 }

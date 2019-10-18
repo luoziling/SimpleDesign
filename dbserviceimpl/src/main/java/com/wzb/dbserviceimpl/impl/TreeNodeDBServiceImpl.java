@@ -73,4 +73,12 @@ public class TreeNodeDBServiceImpl implements TreeNodeDBService {
     public int delById(Integer id) {
         return treeNodeContentMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<TreeNodeContent> selByPI(String projectName) {
+        TreeNodeContentExample example = new TreeNodeContentExample();
+        example.createCriteria().andProjectNameEqualTo(projectName);
+
+        return treeNodeContentMapper.selectByExample(example);
+    }
 }

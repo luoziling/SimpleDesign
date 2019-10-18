@@ -19,4 +19,7 @@ public interface DocInfo2DBservice {
 
     @RequestMapping(value = "/findCountDocInfo/{count}",method = RequestMethod.GET)
     List<DocInfo2> findCountDocInfo(@PathVariable("count") int count);
+
+    @RequestMapping(value = "/findById/{id}",method = RequestMethod.GET)
+    public DocInfo2 findById(@PathVariable(value = "id") int id);
 }

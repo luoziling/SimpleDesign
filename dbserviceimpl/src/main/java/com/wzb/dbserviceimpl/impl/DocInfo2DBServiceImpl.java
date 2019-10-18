@@ -37,4 +37,9 @@ public class DocInfo2DBServiceImpl implements DocInfo2DBService {
 
         return info.getList();
     }
+
+    @Override
+    public DocInfo2 findById(int id) {
+        return docInfo2Mapper.selectByPrimaryKey(id);
+    }
 }

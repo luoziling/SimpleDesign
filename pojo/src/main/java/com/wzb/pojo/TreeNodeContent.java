@@ -30,4 +30,13 @@ public class TreeNodeContent {
     public void setProjectName(String projectName) {
         this.projectName = projectName == null ? null : projectName.trim();
     }
+
+    @Override
+    public String toString() {
+        return "TreeNodeContent{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                ", projectName='" + projectName + '\'' +
+                '}';
+    }
 }

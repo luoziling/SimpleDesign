@@ -4,6 +4,7 @@ import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RetryRule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
@@ -11,6 +12,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+//import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -19,15 +21,19 @@ import org.springframework.web.client.RestTemplate;
 //@ComponentScans({@ComponentScan("com.wzb.dbservice"),@ComponentScan("com.wzb.businessservice")})
 //@ComponentScan("com.wzb.dbservice")
 @SpringBootApplication
+//@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 @EnableEurekaClient
 @EnableFeignClients
+//@EnableTransactionManagement
+
+
 
 //@EnableFeignClients(basePackages = {"com.wzb.dbservice"})
 //@EnableFeignClients(basePackages = {"com.wzb.feignapi"})
 //@ComponentScan({"com.wzb.feignapi","com.wzb.businessservice"})
 //@ComponentScan({"com.wzb.dbservice","com.wzb.businessservice"})
 //@ComponentScan("com.wzb.dbservice")
-public class BusinessServiceImplApplication {
+public class                                                                                                                                                     BusinessServiceImplApplication {
 
     @Bean
     @LoadBalanced //Spring Cloud Ribbon是基于Netflix Ribbon实现的一套==**客户端**==负载均衡工具
