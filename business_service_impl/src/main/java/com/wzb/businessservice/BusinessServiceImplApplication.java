@@ -33,7 +33,7 @@ import org.springframework.web.client.RestTemplate;
 //@ComponentScan({"com.wzb.feignapi","com.wzb.businessservice"})
 //@ComponentScan({"com.wzb.dbservice","com.wzb.businessservice"})
 //@ComponentScan("com.wzb.dbservice")
-public class                                                                                                                                                     BusinessServiceImplApplication {
+public class  BusinessServiceImplApplication {
 
     @Bean
     @LoadBalanced //Spring Cloud Ribbon是基于Netflix Ribbon实现的一套==**客户端**==负载均衡工具

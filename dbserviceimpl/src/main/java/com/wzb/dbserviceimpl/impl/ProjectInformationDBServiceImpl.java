@@ -61,7 +61,8 @@ public class ProjectInformationDBServiceImpl implements ProjectInformationDBServ
         List<ProjectInformation> projectInformationList = null;
         ProjectInformationExample example = new ProjectInformationExample();
 //        example.createCriteria().andProjectNameEqualTo("测试project3");
-        example.createCriteria().andProjectNameEqualTo("测试project3");
+//        example.createCriteria().andProjectNameEqualTo("测试project3");
+        // 暂定先全部查询后续可以改为分页查询
         projectInformationList = projectInformationMapper.selectByExample(example);
         System.out.println(projectInformationList.toString());
         return projectInformationList;
@@ -130,6 +131,37 @@ public class ProjectInformationDBServiceImpl implements ProjectInformationDBServ
     @Override
     public ProjectInformation selNowModel() {
         //将ID为n的数据项定位保存当前项目信息的数据项
-        return projectInformationMapper.selectByPrimaryKey(10004);
+        return projectInformationMapper.selectByPrimaryKey(1);
+    }
+
+
+    @Override
+    public Boolean setNowModel(String projectName) {
+//        ProjectInformationExample example = new ProjectInformationExample();
+//        example.createCriteria().andIdEqualTo(10004);
+        ProjectInformation projectInformation = new ProjectInformation();
+        projectInformation.setId(1);
+        projectInformation.setProjectName(projectName);
+        int i = projectInformationMapper.updateByPrimaryKey(projectInformation);
+        if (i==1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean createVerification(String projectName) {
+        ProjectInformationExample example = new ProjectInformationExample();
+        example.createCriteria().andProjectNameEqualTo(projectName);
+        List<ProjectInformation> projectInformationList = projectInformationMapper.selectByExample(example);
+        System.out.println("projectInformationList.size:" + projectInformationList.size());
+        if (projectInformationList.size()>0){
+            // 代表找到了那么就不能创建同名
+            return false;
+        }else {
+            // 代表未找到同名模型可以创建
+            return true;
+        }
     }
 }

@@ -6,6 +6,7 @@
 
     <groupId>com.wzb</groupId>
     <artifactId>simpledesign</artifactId>
+    <!--<artifactId>simpledecision</artifactId>-->
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
@@ -14,10 +15,19 @@
         <module>business_service</module>
         <module>common</module>
         <module>feignapi</module>
+        <module>sd-redis</module>
+        <module>userservice</module>
     </modules>
+
+    <properties>
+        <httpclient-version>4.5</httpclient-version>
+        <ftpclient-version>3.3</ftpclient-version>
+        <jackson-version>2.4.1</jackson-version>
+    </properties>
 
 
     <build>
+        <!--<finalName>simpledecision</finalName>-->
         <finalName>simpledesign</finalName>
         <resources>
             <resource>

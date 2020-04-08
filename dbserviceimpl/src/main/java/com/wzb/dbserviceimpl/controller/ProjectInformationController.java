@@ -25,8 +25,9 @@ public class ProjectInformationController implements ProjectInformationDBService
     private ProjectInformationDBService projectInformationDBService;
 
 
-    @RequestMapping(value = "/get_all",method = RequestMethod.GET)
+    @RequestMapping(value = "/project_information",method = RequestMethod.GET)
     public List<ProjectInformation>getAllProject(){
+        System.out.println("projectInformationDBService = " + projectInformationDBService);
         List<ProjectInformation> projectInformationList= new ArrayList<>();
         projectInformationList = projectInformationDBService.selAll();
         return projectInformationList;
@@ -94,5 +95,19 @@ public class ProjectInformationController implements ProjectInformationDBService
     @Override
     public void insInitial(@RequestBody String projectName) {
         projectInformationDBService.insInitial(projectName);
+    }
+
+    @RequestMapping(value = "/setNowModel",method = RequestMethod.POST)
+    @Override
+    public Boolean setNowModel(@RequestBody String projectName) {
+        System.out.println("setNowModel；" + projectName);
+        return projectInformationDBService.setNowModel(projectName);
+    }
+
+    @RequestMapping(value = "/createVerification",method = RequestMethod.POST)
+    @Override
+    public Boolean createVerification(@RequestBody String projectName) {
+        System.out.println("createVerification；" + projectName);
+        return projectInformationDBService.createVerification(projectName);
     }
 }

@@ -38,6 +38,13 @@ public interface ProjectInformationDBService {
      */
     ProjectInformation selNowModel();
 
+    /**
+     * 设置当前模型
+     * 在创建或者选取模型的时候要重置数据库中的nowModel字段（后续可以放到redis中）
+     * @return
+     */
+    Boolean setNowModel(String projectName);
+
 
 //    @RequestMapping("/add_pi")
     void insTest();
@@ -50,6 +57,13 @@ public interface ProjectInformationDBService {
      * @param projectName
      */
     void projectCreation(String projectName);
+
+    /**
+     * 模型创建检测是否有相同的项目名已存在
+     * @param projectName
+     * @return
+     */
+    Boolean createVerification(String projectName);
 
 
 }

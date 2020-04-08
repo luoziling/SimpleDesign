@@ -12,11 +12,16 @@
         <module name="common" />
         <module name="db_service" />
         <module name="db_service_impl" />
+        <module name="ego-redis" />
         <module name="eureka" />
         <module name="eureka02" />
         <module name="eureka03" />
         <module name="feignapi" />
         <module name="pojo" />
+        <module name="redis" />
+        <module name="userservice" />
+        <module name="userserviceimpl" />
+        <module name="zuul_proxy" />
       </profile>
     </annotationProcessing>
   </component>
@@ -27,6 +32,9 @@
       <module name="eureka" options="-parameters" />
       <module name="eureka02" options="-parameters" />
       <module name="eureka03" options="-parameters" />
+      <module name="redis" options="-parameters" />
+      <module name="userserviceimpl" options="-parameters" />
+      <module name="zuul_proxy" options="-parameters" />
     </option>
   </component>
 </project>
