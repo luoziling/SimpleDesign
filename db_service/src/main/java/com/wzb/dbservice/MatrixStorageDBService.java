@@ -1,5 +1,8 @@
 package com.wzb.dbservice;
 
+import com.wzb.common.CommonResult;
+import com.wzb.common.MatrixResult;
+import com.wzb.common.NWResult;
 import com.wzb.pojo.MatrixStorage;
 
 import java.util.List;
@@ -53,4 +56,18 @@ public interface MatrixStorageDBService {
      * @return
      */
     String test11();
+
+    /**
+     * 根据ID与点击的节点的内容查询判断矩阵数据
+     * @param matrixStorage
+     * @return
+     */
+    MatrixResult selByIV(MatrixStorage matrixStorage);
+
+    /**
+     * 插入或更新整个矩阵
+     * @param nwResult
+     * @return
+     */
+    CommonResult insOrUpdByNW(NWResult nwResult);
 }

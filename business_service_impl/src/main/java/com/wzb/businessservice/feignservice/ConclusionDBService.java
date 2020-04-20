@@ -1,5 +1,6 @@
 package com.wzb.businessservice.feignservice;
 
+import com.wzb.common.ConcalWrapper;
 import com.wzb.pojo.Conclusion;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,9 @@ public interface ConclusionDBService {
 
     @RequestMapping(value = "/selByModel",method = RequestMethod.GET)
     public List<Conclusion> selByModel();
+
+    @RequestMapping(value = "/selByPI",method = RequestMethod.POST)
+    public List<Conclusion> selByPI(@RequestBody ConcalWrapper concalWrapper);
 
     @RequestMapping(value = "/insOneRecord",method = RequestMethod.POST)
     public int insOneRecord(@RequestBody Conclusion conclusion);

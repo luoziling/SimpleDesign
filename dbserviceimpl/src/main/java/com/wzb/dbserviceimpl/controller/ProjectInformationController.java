@@ -2,6 +2,7 @@ package com.wzb.dbserviceimpl.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.ribbon.proxy.annotation.Hystrix;
+import com.wzb.common.AllModelsResult;
 import com.wzb.dbservice.ProjectInformationDBService;
 import com.wzb.pojo.ProjectInformation;
 import org.springframework.stereotype.Controller;
@@ -79,6 +80,18 @@ public class ProjectInformationController implements ProjectInformationDBService
         return projectInformationDBService.selById(id);
     }
 
+    @RequestMapping(value = "/selByPI",method = RequestMethod.POST)
+    @Override
+    public boolean selByPI(@RequestBody ProjectInformation pi) {
+        return projectInformationDBService.selByPI(pi);
+    }
+
+    @RequestMapping(value = "/selByPi",method = RequestMethod.POST)
+    @Override
+    public ProjectInformation selByPi(@RequestBody ProjectInformation pi) {
+        return projectInformationDBService.selByPi(pi);
+    }
+
     @RequestMapping(value = "/selNowModel",method = RequestMethod.GET)
     @Override
     public ProjectInformation selNowModel() {
@@ -97,6 +110,12 @@ public class ProjectInformationController implements ProjectInformationDBService
         projectInformationDBService.insInitial(projectName);
     }
 
+    @RequestMapping(value = "/insInitialExpert",method = RequestMethod.POST)
+    @Override
+    public void insInitialExpert(@RequestBody ProjectInformation pi) {
+        projectInformationDBService.insInitialExpert(pi);
+    }
+
     @RequestMapping(value = "/setNowModel",method = RequestMethod.POST)
     @Override
     public Boolean setNowModel(@RequestBody String projectName) {
@@ -109,5 +128,11 @@ public class ProjectInformationController implements ProjectInformationDBService
     public Boolean createVerification(@RequestBody String projectName) {
         System.out.println("createVerification；" + projectName);
         return projectInformationDBService.createVerification(projectName);
+    }
+
+    @RequestMapping(value = "/selByUserID/{id}",method = RequestMethod.GET)
+    @Override
+    public AllModelsResult selByUserID(@PathVariable("id") Integer userID) {
+        return projectInformationDBService.selByUserID(userID);
     }
 }

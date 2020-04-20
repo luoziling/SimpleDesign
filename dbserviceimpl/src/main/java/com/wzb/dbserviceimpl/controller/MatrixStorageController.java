@@ -1,12 +1,12 @@
 package com.wzb.dbserviceimpl.controller;
 
+import com.wzb.common.CommonResult;
+import com.wzb.common.MatrixResult;
+import com.wzb.common.NWResult;
 import com.wzb.dbservice.MatrixStorageDBService;
 import com.wzb.pojo.MatrixStorage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -60,5 +60,17 @@ public class MatrixStorageController implements MatrixStorageDBService {
     public String test11() {
         System.out.println("test11");
         return matrixStorageDBService.test11();
+    }
+
+    @RequestMapping(value = "/selByIV", method = RequestMethod.POST)
+    @Override
+    public MatrixResult selByIV(@RequestBody MatrixStorage matrixStorage) {
+        return matrixStorageDBService.selByIV(matrixStorage);
+    }
+
+    @RequestMapping(value = "/insOrUpdByNW", method = RequestMethod.POST)
+    @Override
+    public CommonResult insOrUpdByNW(@RequestBody NWResult nwResult) {
+        return matrixStorageDBService.insOrUpdByNW(nwResult);
     }
 }

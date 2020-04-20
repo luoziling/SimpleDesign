@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="business_service" />
         <module name="business_service_impl" />
-        <module name="common" />
         <module name="db_service" />
         <module name="db_service_impl" />
         <module name="ego-redis" />
@@ -24,6 +23,9 @@
         <module name="zuul_proxy" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

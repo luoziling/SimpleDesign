@@ -1,7 +1,6 @@
 package com.wzb.businessservice;
 
-import com.wzb.common.NWResult;
-import com.wzb.common.RootCriData;
+import com.wzb.common.*;
 
 /**
  * @author Satsuki
@@ -35,5 +34,19 @@ public interface CalculationService {
      * 将输入的数值计算归一化权重并且保存
      */
     void norCalAndSave(RootCriData rootCriData);
+
+
+    /**
+     * 计算一致性保存矩阵数据
+     * @param matrixWrapper 矩阵数据的封装
+     * @return
+     */
+    CommonResult expertMatrixSaVE(MatrixWrapper matrixWrapper);
+
+    /**
+     * 结论计算
+     * @return
+     */
+    CommonResult concalExpert(ConcalWrapper concalWrapper);
 
 }

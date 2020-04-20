@@ -39,6 +39,9 @@ public interface ProjectInformationDBService {
     @RequestMapping(value = "/project_creation", method = RequestMethod.POST)
     public void projectCreation(String projectName);
 
+    @RequestMapping(value = "/insInitialExpert",method = RequestMethod.POST)
+    public void insInitialExpert(@RequestBody ProjectInformation pi);
+
 
 
     @RequestMapping(value = "/selAll",method = RequestMethod.GET)
@@ -46,6 +49,13 @@ public interface ProjectInformationDBService {
 
     @RequestMapping(value = "/selById",method = RequestMethod.GET)
     public ProjectInformation selById(Integer id);
+
+    @RequestMapping(value = "/selByPI",method = RequestMethod.POST)
+    public boolean selByPI(@RequestBody ProjectInformation pi);
+
+    @RequestMapping(value = "/selByPi",method = RequestMethod.POST)
+    public ProjectInformation selByPi(@RequestBody ProjectInformation pi);
+
 
     @RequestMapping(value = "/selNowModel",method = RequestMethod.GET)
     public ProjectInformation selNowModel();

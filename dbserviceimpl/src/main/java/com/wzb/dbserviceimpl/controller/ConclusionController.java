@@ -1,12 +1,12 @@
 package com.wzb.dbserviceimpl.controller;
 
+import com.wzb.common.CommonResult;
+import com.wzb.common.ConcalWrapper;
+import com.wzb.common.ConclusionResult;
 import com.wzb.dbservice.ConclusionDBService;
 import com.wzb.pojo.Conclusion;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +28,12 @@ public class ConclusionController implements ConclusionDBService {
         return conclusionDBService.selByModel();
     }
 
+    @RequestMapping(value = "/selByPI",method = RequestMethod.POST)
+    @Override
+    public List<Conclusion> selByPI(@RequestBody ConcalWrapper concalWrapper) {
+        return conclusionDBService.selByPI(concalWrapper);
+    }
+
     @RequestMapping(value = "/insOneRecord",method = RequestMethod.POST)
     @Override
     public int insOneRecord(@RequestBody Conclusion conclusion) {
@@ -45,5 +51,23 @@ public class ConclusionController implements ConclusionDBService {
     public int updByConclusion(@RequestBody Conclusion conclusion) {
         System.out.println("updByConclusion+conclusion:"+conclusion.toString());
         return conclusionDBService.updByConclusion(conclusion);
+    }
+
+    @RequestMapping(value = "/selConByPI/{id}",method = RequestMethod.GET)
+    @Override
+    public ConclusionResult selConByPI(@PathVariable("id") Integer projectID) {
+        return conclusionDBService.selConByPI(projectID);
+    }
+
+    @RequestMapping(value = "/insConByEx",method = RequestMethod.POST)
+    @Override
+    public CommonResult insConByEx(@RequestBody Conclusion conclusion) {
+        return conclusionDBService.insConByEx(conclusion);
+    }
+
+    @RequestMapping(value = "/delByExCon",method = RequestMethod.POST)
+    @Override
+    public CommonResult delByExCon(@RequestBody Conclusion conclusion) {
+        return conclusionDBService.delByExCon(conclusion);
     }
 }

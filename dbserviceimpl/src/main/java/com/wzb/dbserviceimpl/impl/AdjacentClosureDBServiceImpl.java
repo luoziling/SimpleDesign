@@ -61,6 +61,29 @@ public class AdjacentClosureDBServiceImpl implements AdjacentClosureDBService {
     }
 
     @Override
+    public void insInitialExpert(ProjectInformation pi) {
+        // 查询节点内容的ID
+        // 闭包表与节点表关系密切保存了节点表中各个节点的关系
+        TreeNodeContentExample tExample = new TreeNodeContentExample();
+        // 根据项目id确定项目名与用户名，根据初始化的根节点名（项目名）确定根节点
+        tExample.createCriteria().andProjectIdEqualTo(pi.getId())
+                .andValueEqualTo(pi.getProjectName());
+        Integer ancestor = treeNodeContentMapper.selectByExample(tExample).get(0).getId();
+        AdjacentClosure adjacentClosure = new AdjacentClosure();
+        adjacentClosure.setProjectName(pi.getProjectName());
+        adjacentClosure.setProjectId(pi.getId());
+        //当节点第一次插入时祖先后裔都是同一个
+        adjacentClosure.setAncestor(ancestor);
+        adjacentClosure.setDescendant(ancestor);
+        adjacentClosure.setDepth(0);
+
+
+        adjacentClosureMapper.insert(adjacentClosure);
+
+
+    }
+
+    @Override
     public List<Integer> selZeroNode() {
         List<Integer> nodeIdList = new ArrayList<>();
         List<AdjacentClosure> acList = new ArrayList<>();
@@ -111,6 +134,14 @@ public class AdjacentClosureDBServiceImpl implements AdjacentClosureDBService {
     }
 
     @Override
+    public List<AdjacentClosure> selByAP(Integer projectID, Integer ancestor) {
+        AdjacentClosureExample example=  new AdjacentClosureExample();
+        example.createCriteria().andProjectIdEqualTo(projectID)
+                .andAncestorEqualTo(ancestor);
+        return adjacentClosureMapper.selectByExample(example);
+    }
+
+    @Override
     public AdjacentClosure selByDescendant(Integer descendant) {
         AdjacentClosure fatherAdj = new AdjacentClosure();
         AdjacentClosureExample example = new AdjacentClosureExample();
@@ -118,6 +149,21 @@ public class AdjacentClosureDBServiceImpl implements AdjacentClosureDBService {
                 .andDescendantEqualTo(descendant).andDepthEqualTo(1);
         fatherAdj = adjacentClosureMapper.selectByExample(example).get(0);
         return fatherAdj;
+    }
+
+    @Override
+    public AdjacentClosure selByDP(Integer projectID, Integer descendant) {
+        AdjacentClosureExample example = new AdjacentClosureExample();
+        example.createCriteria().andProjectIdEqualTo(projectID)
+                .andDescendantEqualTo(descendant)
+                .andDepthEqualTo(1);
+        List<AdjacentClosure> adjacentClosures = adjacentClosureMapper.selectByExample(example);
+        if (adjacentClosures.size()>0){
+            return adjacentClosures.get(0);
+        }else {
+            return null;
+        }
+//        return adjacentClosureMapper.selectByExample(example).get(0);
     }
 
     @Override

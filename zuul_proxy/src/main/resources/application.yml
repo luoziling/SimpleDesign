@@ -17,7 +17,17 @@ eureka:
 zuul:
   routes:
     eureka-db-provider:
-      path: /**
+      path: /db/**
 
     eureka-user-service:
-      path: /**
+      path: /user/**
+
+    eureka-business-service:
+      path: /business/**
+
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  okhttp:
+    enabled: true

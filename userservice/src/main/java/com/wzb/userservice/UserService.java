@@ -1,5 +1,6 @@
 package com.wzb.userservice;
 
+
 import com.wzb.common.UserResult;
 import com.wzb.pojo.EcUser;
 

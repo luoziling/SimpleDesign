@@ -1,5 +1,6 @@
 package com.wzb.dbserviceimpl.impl;
 
+import com.wzb.common.AllModelsResult;
 import com.wzb.dbservice.AdjacentClosureDBService;
 import com.wzb.dbservice.ProjectInformationDBService;
 import com.wzb.dbservice.TreeNodeDBService;
@@ -104,6 +105,25 @@ public class ProjectInformationDBServiceImpl implements ProjectInformationDBServ
     }
 
     @Override
+    public boolean selByPI(ProjectInformation pi) {
+        ProjectInformationExample example = new ProjectInformationExample();
+        example.createCriteria().andProjectNameEqualTo(pi.getProjectName())
+                .andUserIdEqualTo(pi.getUserId());
+        List<ProjectInformation> list = projectInformationMapper.selectByExample(example);
+        return list.size()==0;
+    }
+
+    @Override
+    public ProjectInformation selByPi(ProjectInformation pi) {
+        System.out.println("selByPi:" + pi.toString());
+        ProjectInformationExample example = new ProjectInformationExample();
+        example.createCriteria().andProjectNameEqualTo(pi.getProjectName())
+                .andUserIdEqualTo(pi.getUserId());
+        List<ProjectInformation> list = projectInformationMapper.selectByExample(example);
+        return list.get(0);
+    }
+
+    @Override
     public void insInitial(String projectName) {
         System.out.println("ProjectInformationDBServiceImpl projectName:" + projectName);
         ProjectInformation initialPI = new ProjectInformation();
@@ -111,6 +131,24 @@ public class ProjectInformationDBServiceImpl implements ProjectInformationDBServ
         //初始化层数为1后期根据具体插入的数据进行修改（边插入新数据边修改
         initialPI.setLayer(1);
         projectInformationMapper.insert(initialPI);
+    }
+
+    @Override
+    public void insInitialExpert(ProjectInformation pi) {
+        pi.setLayer(1);
+        projectInformationMapper.insert(pi);
+        System.out.println(pi.toString());
+        // 插入项目信息获取id
+        ProjectInformationExample example = new ProjectInformationExample();
+        example.createCriteria().andProjectNameEqualTo(pi.getProjectName())
+                .andUserIdEqualTo(pi.getUserId());
+        Integer pid = projectInformationMapper.selectByExample(example).get(0).getId();
+        pi.setId(pid);
+        // 在treeNodeContent于闭包表都初始化
+        treeNodeDBService.insInitialExpert(pi);
+        // 保存闭包
+        adjacentClosureDBService.insInitialExpert(pi);
+
     }
 
     @Override
@@ -163,5 +201,25 @@ public class ProjectInformationDBServiceImpl implements ProjectInformationDBServ
             // 代表未找到同名模型可以创建
             return true;
         }
+    }
+
+    @Override
+    public AllModelsResult selByUserID(Integer userID) {
+        AllModelsResult result = new AllModelsResult();
+        try{
+            ProjectInformationExample example = new ProjectInformationExample();
+            example.createCriteria().andUserIdEqualTo(userID);
+
+            result.setFlag(true);
+            result.setProjectList(projectInformationMapper.selectByExample(example));
+            result.setReviews("查询成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setFlag(false);
+            result.setReviews("出错了，请重试");
+
+        }
+
+        return result;
     }
 }

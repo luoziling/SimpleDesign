@@ -11,6 +11,8 @@ public class AdjacentClosure {
 
     private Integer depth;
 
+    private Integer projectId;
+
     public Integer getId() {
         return id;
     }
@@ -51,6 +53,14 @@ public class AdjacentClosure {
         this.depth = depth;
     }
 
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
     @Override
     public String toString() {
         return "AdjacentClosure{" +
@@ -59,6 +69,7 @@ public class AdjacentClosure {
                 ", ancestor=" + ancestor +
                 ", descendant=" + descendant +
                 ", depth=" + depth +
+                ", projectId=" + projectId +
                 '}';
     }
 }

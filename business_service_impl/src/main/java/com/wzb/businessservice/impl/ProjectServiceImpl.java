@@ -6,6 +6,7 @@ import com.wzb.businessservice.feignservice.MatrixStorageDBService;
 import com.wzb.businessservice.feignservice.ProjectInformationDBService;
 //import com.wzb.feignapi.ProjectInformationDBService;
 import com.wzb.businessservice.feignservice.TreeNodeDBService;
+import com.wzb.common.CreateResult;
 import com.wzb.pojo.MatrixStorage;
 import com.wzb.pojo.ProjectInformation;
 import com.wzb.pojo.TreeNodeContent;
@@ -103,6 +104,30 @@ public class ProjectServiceImpl implements ProjectService {
 //        acDBService.insInitial(projectName);
 
 
+    }
+
+    @Override
+    public CreateResult projectCreationExpert(ProjectInformation projectInformation) {
+        System.out.println(projectInformation);
+        CreateResult result = new CreateResult();
+        // 看看该用户是否创建过同名项目
+        boolean flag = piDBService.selByPI(projectInformation);
+        System.out.println(flag);
+
+        // 返回的flag代表了未取到同名返回true
+        if (!flag){
+            // 找到重复返回信息
+            result.setFlag(false).setReviews("创建失败，有重复决策项目名");
+            return result;
+        }
+
+        // 无重复创建项目
+        piDBService.insInitialExpert(projectInformation);
+
+        Integer projectID = piDBService.selByPi(projectInformation).getId();
+        result.setProjectID(projectID).setFlag(true).setReviews("创建成功");
+
+        return result;
     }
 
     @Override

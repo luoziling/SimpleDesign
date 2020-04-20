@@ -6,6 +6,8 @@
     <result column="project_name" property="projectName" jdbcType="VARCHAR" />
     <result column="plan" property="plan" jdbcType="VARCHAR" />
     <result column="priority" property="priority" jdbcType="REAL" />
+    <result column="project_id" property="projectId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, project_name, plan, priority
+    id, project_name, plan, priority, project_id, user_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wzb.pojo.ConclusionExample" >
     select
@@ -100,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.wzb.pojo.Conclusion" >
     insert into conclusion (id, project_name, plan, 
-      priority)
+      priority, project_id, user_id
+      )
     values (#{id,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{plan,jdbcType=VARCHAR}, 
-      #{priority,jdbcType=REAL})
+      #{priority,jdbcType=REAL}, #{projectId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.wzb.pojo.Conclusion" >
     insert into conclusion
@@ -119,6 +123,12 @@
       <if test="priority != null" >
         priority,
       </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -132,6 +142,12 @@
       </if>
       <if test="priority != null" >
         #{priority,jdbcType=REAL},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -156,6 +172,12 @@
       <if test="record.priority != null" >
         priority = #{record.priority,jdbcType=REAL},
       </if>
+      <if test="record.projectId != null" >
+        project_id = #{record.projectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +188,9 @@
     set id = #{record.id,jdbcType=INTEGER},
       project_name = #{record.projectName,jdbcType=VARCHAR},
       plan = #{record.plan,jdbcType=VARCHAR},
-      priority = #{record.priority,jdbcType=REAL}
+      priority = #{record.priority,jdbcType=REAL},
+      project_id = #{record.projectId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +207,12 @@
       <if test="priority != null" >
         priority = #{priority,jdbcType=REAL},
       </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -190,7 +220,9 @@
     update conclusion
     set project_name = #{projectName,jdbcType=VARCHAR},
       plan = #{plan,jdbcType=VARCHAR},
-      priority = #{priority,jdbcType=REAL}
+      priority = #{priority,jdbcType=REAL},
+      project_id = #{projectId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

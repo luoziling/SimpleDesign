@@ -2,6 +2,7 @@ package com.wzb.dbserviceimpl.controller;
 
 import com.wzb.dbservice.AdjacentClosureDBService;
 import com.wzb.pojo.AdjacentClosure;
+import com.wzb.pojo.ProjectInformation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,6 +25,12 @@ public class AdjacentClosureController implements AdjacentClosureDBService {
         adjacentClosureDBService.insInitial(projectName);
     }
 
+    @RequestMapping(value = "/insInitialExpert", method = RequestMethod.POST)
+    @Override
+    public void insInitialExpert(@RequestBody ProjectInformation pi) {
+        adjacentClosureDBService.insInitialExpert(pi);
+    }
+
     @RequestMapping(value = "/selZeroNode",method = RequestMethod.GET)
     @Override
     public List<Integer> selZeroNode() {
@@ -42,10 +49,22 @@ public class AdjacentClosureController implements AdjacentClosureDBService {
         return adjacentClosureDBService.selByAncestor(ancestor);
     }
 
+    @RequestMapping(value = "/selByAP",method = RequestMethod.GET)
+    @Override
+    public List<AdjacentClosure> selByAP(@RequestParam("projectID") Integer projectID,@RequestParam("ancestor") Integer ancestor) {
+        return adjacentClosureDBService.selByAP(projectID,ancestor);
+    }
+
     @RequestMapping(value = "/selByDescendant/{descendant}",method = RequestMethod.GET)
     @Override
     public AdjacentClosure selByDescendant(@PathVariable(value = "descendant") Integer descendant) {
         return adjacentClosureDBService.selByDescendant(descendant);
+    }
+
+    @RequestMapping(value = "/selByDescendant",method = RequestMethod.GET)
+    @Override
+    public AdjacentClosure selByDP(@RequestParam("projectID") Integer projectID,@RequestParam("descendant") Integer descendant) {
+        return adjacentClosureDBService.selByDP(projectID,descendant);
     }
 
     @RequestMapping(value = "/insByAC",method = RequestMethod.POST)

@@ -1,11 +1,13 @@
 package com.wzb.common;
 
+import com.wzb.pojo.MatrixStorage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Satsuki
@@ -20,6 +22,11 @@ public class NWResult {
     Double[][] data;
     Double[] w;
     Double CR;
+    // 多封装一个矩阵相关的数据，在模块保存数据时使用
+    MatrixStorage matrixStorage;
+
+    // 封装这一层准则
+    List<String> nextList;
 
     @Override
     public String toString() {
@@ -27,6 +34,8 @@ public class NWResult {
                 "data=" + Arrays.toString(data) +
                 ", w=" + Arrays.toString(w) +
                 ", CR=" + CR +
+                ", matrixStorage=" + matrixStorage +
+                ", nextList=" + nextList +
                 '}';
     }
 }

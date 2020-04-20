@@ -1,5 +1,6 @@
 package com.wzb.dbservice;
 
+import com.wzb.common.AllModelsResult;
 import com.wzb.pojo.ProjectInformation;
 //import org.springframework.cloud.netflix.feign.FeignClient;
 //import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,21 @@ public interface ProjectInformationDBService {
 
 
     /**
+     * 根据用户id与项目名查询是否有重复项目
+     * @param pi
+     * @return
+     */
+    boolean selByPI(ProjectInformation pi);
+
+    /**
+     * 根据用户id与项目名查询是否有重复项目
+     * @param pi
+     * @return 返回项目信息
+     */
+    ProjectInformation selByPi(ProjectInformation pi);
+
+
+    /**
      * 查找当前的模型（项目）
      * @return
      */
@@ -52,6 +68,10 @@ public interface ProjectInformationDBService {
     // 创建时候就添加一个根节点 并保存
     void insInitial(String projectName);
 
+
+    // 重载方法，参数不同。
+    void insInitialExpert(ProjectInformation pi);
+
     /**
      * 项目（模型）创建
      * @param projectName
@@ -64,6 +84,13 @@ public interface ProjectInformationDBService {
      * @return
      */
     Boolean createVerification(String projectName);
+
+    /**
+     * 根据用户ID查询所有项目
+     * @param userID
+     * @return
+     */
+    AllModelsResult selByUserID(Integer userID);
 
 
 }

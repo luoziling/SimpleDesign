@@ -1,5 +1,7 @@
 package com.wzb.businessservice.feignservice;
 
+import com.wzb.common.CommonResult;
+import com.wzb.common.NWResult;
 import com.wzb.pojo.MatrixStorage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,4 +27,7 @@ public interface MatrixStorageDBService {
 
     @RequestMapping(value = "/insOrUpdByMS",method = RequestMethod.POST)
     public int insOrUpdByMS(@RequestBody MatrixStorage matrixStorage);
+
+    @RequestMapping(value = "/insOrUpdByNW", method = RequestMethod.POST)
+    public CommonResult insOrUpdByNW(@RequestBody NWResult nwResult);
 }

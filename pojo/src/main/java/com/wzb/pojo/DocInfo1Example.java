@@ -374,73 +374,73 @@ public class DocInfo1Example {
             return (Criteria) this;
         }
 
-        public Criteria and科室IsNull() {
-            addCriterion("科室 is null");
+        public Criteria andDepartmentIsNull() {
+            addCriterion("department is null");
             return (Criteria) this;
         }
 
-        public Criteria and科室IsNotNull() {
-            addCriterion("科室 is not null");
+        public Criteria andDepartmentIsNotNull() {
+            addCriterion("department is not null");
             return (Criteria) this;
         }
 
-        public Criteria and科室EqualTo(String value) {
-            addCriterion("科室 =", value, "科室");
+        public Criteria andDepartmentEqualTo(String value) {
+            addCriterion("department =", value, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室NotEqualTo(String value) {
-            addCriterion("科室 <>", value, "科室");
+        public Criteria andDepartmentNotEqualTo(String value) {
+            addCriterion("department <>", value, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室GreaterThan(String value) {
-            addCriterion("科室 >", value, "科室");
+        public Criteria andDepartmentGreaterThan(String value) {
+            addCriterion("department >", value, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室GreaterThanOrEqualTo(String value) {
-            addCriterion("科室 >=", value, "科室");
+        public Criteria andDepartmentGreaterThanOrEqualTo(String value) {
+            addCriterion("department >=", value, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室LessThan(String value) {
-            addCriterion("科室 <", value, "科室");
+        public Criteria andDepartmentLessThan(String value) {
+            addCriterion("department <", value, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室LessThanOrEqualTo(String value) {
-            addCriterion("科室 <=", value, "科室");
+        public Criteria andDepartmentLessThanOrEqualTo(String value) {
+            addCriterion("department <=", value, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室Like(String value) {
-            addCriterion("科室 like", value, "科室");
+        public Criteria andDepartmentLike(String value) {
+            addCriterion("department like", value, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室NotLike(String value) {
-            addCriterion("科室 not like", value, "科室");
+        public Criteria andDepartmentNotLike(String value) {
+            addCriterion("department not like", value, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室In(List<String> values) {
-            addCriterion("科室 in", values, "科室");
+        public Criteria andDepartmentIn(List<String> values) {
+            addCriterion("department in", values, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室NotIn(List<String> values) {
-            addCriterion("科室 not in", values, "科室");
+        public Criteria andDepartmentNotIn(List<String> values) {
+            addCriterion("department not in", values, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室Between(String value1, String value2) {
-            addCriterion("科室 between", value1, value2, "科室");
+        public Criteria andDepartmentBetween(String value1, String value2) {
+            addCriterion("department between", value1, value2, "department");
             return (Criteria) this;
         }
 
-        public Criteria and科室NotBetween(String value1, String value2) {
-            addCriterion("科室 not between", value1, value2, "科室");
+        public Criteria andDepartmentNotBetween(String value1, String value2) {
+            addCriterion("department not between", value1, value2, "department");
             return (Criteria) this;
         }
     }

@@ -1,5 +1,6 @@
 package com.wzb.dbserviceimpl.impl;
 
+import com.wzb.common.NorWrapper;
 import com.wzb.dbservice.NormalizationWeightDBService;
 import com.wzb.dbservice.ProjectInformationDBService;
 import com.wzb.dbserviceimpl.mapper.NormalizationWeightMapper;
@@ -55,6 +56,15 @@ public class NormalizationWeightDBServiceImpl implements NormalizationWeightDBSe
     }
 
     @Override
+    public NormalizationWeight selByPI(NorWrapper norWrapper) {
+        NormalizationWeightExample example = new NormalizationWeightExample();
+        example.createCriteria().andProjectIdEqualTo(norWrapper.getConcalWrapper().getProjectID())
+                .andUserIdEqualTo(norWrapper.getConcalWrapper().getUserID())
+                .andNextValueEqualTo(norWrapper.getNextValue());
+        return normalizationWeightMapper.selectByExample(example).get(0);
+    }
+
+    @Override
     public NormalizationWeight selByValueAndPlan(String nowValue, String plan) {
         NormalizationWeight normalizationWeight = new NormalizationWeight();
         NormalizationWeightExample example = new NormalizationWeightExample();
@@ -78,6 +88,17 @@ public class NormalizationWeightDBServiceImpl implements NormalizationWeightDBSe
             return null;
         }
 //        return normalizationWeightMapper.selectByExample(example).get(0);
+    }
+
+    @Override
+    public NormalizationWeight selByTwoValues(NorWrapper norWrapper) {
+        System.out.println("norWrapper = " + norWrapper);
+        NormalizationWeightExample example = new NormalizationWeightExample();
+        example.createCriteria().andProjectIdEqualTo(norWrapper.getConcalWrapper().getProjectID())
+                .andUserIdEqualTo(norWrapper.getConcalWrapper().getUserID())
+                .andValueEqualTo(norWrapper.getNowValue())
+                .andNextValueEqualTo(norWrapper.getNextValue());
+        return normalizationWeightMapper.selectByExample(example).get(0);
     }
 
     @Override

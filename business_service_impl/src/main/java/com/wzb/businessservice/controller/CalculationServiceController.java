@@ -1,8 +1,7 @@
 package com.wzb.businessservice.controller;
 
 import com.wzb.businessservice.CalculationService;
-import com.wzb.common.NWResult;
-import com.wzb.common.RootCriData;
+import com.wzb.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,5 +50,17 @@ public class CalculationServiceController implements CalculationService {
     @Override
     public void norCalAndSave(@RequestBody RootCriData rootCriData) {
         calculationService.norCalAndSave(rootCriData);
+    }
+
+    @RequestMapping(value = "/expertMatrixSaVE",method = RequestMethod.POST)
+    @Override
+    public CommonResult expertMatrixSaVE(@RequestBody MatrixWrapper matrixWrapper) {
+        return calculationService.expertMatrixSaVE(matrixWrapper);
+    }
+
+    @RequestMapping(value = "/concalExpert",method = RequestMethod.POST)
+    @Override
+    public CommonResult concalExpert(@RequestBody ConcalWrapper concalWrapper) {
+        return calculationService.concalExpert(concalWrapper);
     }
 }

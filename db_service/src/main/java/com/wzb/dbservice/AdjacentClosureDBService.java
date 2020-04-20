@@ -1,6 +1,7 @@
 package com.wzb.dbservice;
 
 import com.wzb.pojo.AdjacentClosure;
+import com.wzb.pojo.ProjectInformation;
 
 import java.util.List;
 
@@ -10,7 +11,11 @@ import java.util.List;
  * @description:
  */
 public interface AdjacentClosureDBService {
+
     void insInitial(String projectName);
+
+
+    void insInitialExpert(ProjectInformation pi);
 
     /**
      * 获取深度为0的节点ID
@@ -39,12 +44,28 @@ public interface AdjacentClosureDBService {
     List<AdjacentClosure> selByAncestor(Integer ancestor);
 
     /**
+     * 根据模型ID以及根节点为祖先节点查询所i有记录
+     * @param projectID
+     * @param ancestor
+     * @return
+     */
+    List<AdjacentClosure> selByAP(Integer projectID,Integer ancestor);
+
+    /**
      * 从数据库中查询当前节点有没有父节点
      * 父节点就是在邻接矩阵中后裔ID为当前节点ID且深度为1的节点
      * @param descendant
      * @return
      */
     AdjacentClosure selByDescendant(Integer descendant);
+
+    /**
+     * 根据模型ID以及当前节点节点为后裔节点查询上一层记录
+     * @param projectID
+     * @param descendant
+     * @return
+     */
+    AdjacentClosure selByDP(Integer projectID,Integer descendant);
 
 //    List<AdjacentClosure> selAllChild(Integer )
 

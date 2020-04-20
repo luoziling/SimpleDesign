@@ -1,5 +1,6 @@
 package com.wzb.businessservice;
 
+import com.wzb.common.CreateResult;
 import com.wzb.pojo.MatrixStorage;
 import com.wzb.pojo.ProjectInformation;
 import com.wzb.pojo.TreeNodeContent;
@@ -17,6 +18,14 @@ public interface ProjectService {
      * @param projectName 项目名
      */
     void projectCreation(String projectName);
+
+
+    /**
+     * 专家AHP的项目建立
+     * @param projectInformation
+     * @return
+     */
+    CreateResult projectCreationExpert(ProjectInformation projectInformation);
 
     /**
      * 测试用的

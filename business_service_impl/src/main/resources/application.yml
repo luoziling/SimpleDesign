@@ -1,6 +1,6 @@
 spring:
   application:
-    name: eureka-business
+    name: eureka-business-service
   devtools:
     restart:
       enabled: true #设置开启热部署

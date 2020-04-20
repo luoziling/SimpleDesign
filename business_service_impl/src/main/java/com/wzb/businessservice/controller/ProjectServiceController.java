@@ -2,6 +2,7 @@ package com.wzb.businessservice.controller;
 
 import com.wzb.businessservice.ProjectService;
 import com.wzb.businessservice.utils.FastjsonUtil;
+import com.wzb.common.CreateResult;
 import com.wzb.pojo.MatrixStorage;
 import com.wzb.pojo.ProjectInformation;
 //import org.springframework.transaction.annotation.Isolation;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/project_service")
+//@RequestMapping("/business/project_service")
 //@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 36000,rollbackFor = Exception.class)
 public class ProjectServiceController implements ProjectService {
 
@@ -35,6 +37,12 @@ public class ProjectServiceController implements ProjectService {
         String projectName = FastjsonUtil.getString(json,"projectName");
         System.out.println("projectName:" + projectName);
         projectService.projectCreation(projectName);
+    }
+
+    @RequestMapping(value = "/insInitialExpert", method = RequestMethod.POST)
+    @Override
+    public CreateResult projectCreationExpert(@RequestBody ProjectInformation projectInformation) {
+        return projectService.projectCreationExpert(projectInformation);
     }
 
     @RequestMapping(value = "/get_All",method = RequestMethod.GET)

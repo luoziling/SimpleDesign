@@ -1,5 +1,6 @@
 package com.wzb.businessservice.feignservice;
 
+import com.wzb.common.ConcalWrapper;
 import com.wzb.pojo.ProjectInformation;
 import com.wzb.pojo.TreeNodeContent;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -31,6 +32,9 @@ public interface TreeNodeDBService {
 
     @RequestMapping(value = "/selIdByContent/{nodeValue}",method = RequestMethod.GET)
     public Integer selIdByContent(@PathVariable(value = "nodeValue") String nodeValue);
+
+    @RequestMapping(value = "/selRootByPI",method = RequestMethod.POST)
+    public TreeNodeContent selRootByPI(@RequestBody ConcalWrapper concalWrapper);
 
     @RequestMapping(value = "/selByContent/{model_name}",method = RequestMethod.GET)
     public TreeNodeContent selByContent(@PathVariable(value = "model_name") String value);

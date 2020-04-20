@@ -1,5 +1,6 @@
 package com.wzb.dbserviceimpl.controller;
 
+import com.wzb.common.NorWrapper;
 import com.wzb.dbservice.NormalizationWeightDBService;
 import com.wzb.pojo.NormalizationWeight;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ public class NormalizationWeightController implements NormalizationWeightDBServi
         return normalizationWeightDBService.selByNodeValue(nowValue);
     }
 
+    @RequestMapping(value = "/selByPI",method = RequestMethod.POST)
+    @Override
+    public NormalizationWeight selByPI(@RequestBody NorWrapper norWrapper) {
+        return normalizationWeightDBService.selByPI(norWrapper);
+    }
+
     @RequestMapping(value = "/selByValueAndPlan",method = RequestMethod.GET)
     @Override
     public NormalizationWeight selByValueAndPlan(String nowValue, String plan) {
@@ -33,6 +40,12 @@ public class NormalizationWeightController implements NormalizationWeightDBServi
     @Override
     public NormalizationWeight selByTwoValue(String value, String nextValue) {
         return normalizationWeightDBService.selByTwoValue(value,nextValue);
+    }
+
+    @RequestMapping(value = "/selByTwoValue",method = RequestMethod.POST)
+    @Override
+    public NormalizationWeight selByTwoValues(@RequestBody NorWrapper norWrapper) {
+        return normalizationWeightDBService.selByTwoValues(norWrapper);
     }
 
     @RequestMapping(value = "/insOrUpdByNW",method = RequestMethod.POST)

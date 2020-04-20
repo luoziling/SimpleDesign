@@ -12,11 +12,13 @@
     <modules>
         <module>pojo</module>
         <module>db_service</module>
+        <module>dbserviceimpl</module>
         <module>business_service</module>
-        <module>common</module>
+        <module>business_service_impl</module>
         <module>feignapi</module>
         <module>sd-redis</module>
         <module>userservice</module>
+        <module>userserviceimpl</module>
     </modules>
 
     <properties>

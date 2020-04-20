@@ -7,6 +7,8 @@ public class ProjectInformation {
 
     private Integer layer;
 
+    private Integer userId;
+
     public Integer getId() {
         return id;
     }
@@ -31,12 +33,21 @@ public class ProjectInformation {
         this.layer = layer;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "ProjectInformation{" +
                 "id=" + id +
                 ", projectName='" + projectName + '\'' +
                 ", layer=" + layer +
+                ", userId=" + userId +
                 '}';
     }
 }

@@ -1,8 +1,7 @@
 package com.wzb.dbserviceimpl.mapper;
 
-import com.wzb.pojo.DocInfo1Example;
 import com.wzb.pojo.DocInfo1;
-
+import com.wzb.pojo.DocInfo1Example;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -28,8 +28,14 @@ public interface AdjacentClosureDBService {
     @RequestMapping(value = "/selByAncestor/{ancestor}",method = RequestMethod.GET)
     public List<AdjacentClosure> selByAncestor(@PathVariable(value = "ancestor") Integer ancestor) ;
 
+    @RequestMapping(value = "/selByAP",method = RequestMethod.GET)
+    public List<AdjacentClosure> selByAP(@RequestParam("projectID") Integer projectID,@RequestParam("ancestor") Integer ancestor);
+
     @RequestMapping(value = "/selByDescendant/{descendant}",method = RequestMethod.GET)
     public AdjacentClosure selByDescendant(@PathVariable(value = "descendant") Integer descendant);
+
+    @RequestMapping(value = "/selByDescendant",method = RequestMethod.GET)
+    public AdjacentClosure selByDP(@RequestParam("projectID") Integer projectID,@RequestParam("descendant") Integer descendant);
 
     @RequestMapping(value = "/insByAC",method = RequestMethod.POST)
     public int insByAC(@RequestBody AdjacentClosure adjacentClosure);
