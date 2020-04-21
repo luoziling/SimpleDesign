@@ -142,9 +142,234 @@ public class CalculationServiceImpl implements CalculationService {
 
     @Override
     public void conclusionCalculation() {
+//        int depth=0;
+//        //获取项目名代表的节点ID（根节点ID
+//        TreeNodeContent rootTreeNode = treeNodeDBService.selByContent(projectInformationDBService.selNowModel().getProjectName());
+//        System.out.println("rootTreeNode:"+rootTreeNode.toString());
+//
+//
+//        Integer rootID = rootTreeNode.getId();
+//
+//        //获取项目深度
+//        //以根节点为祖先的所有节点
+//        List<AdjacentClosure> rootAnscstor = adjacentClosureDBService.selByAncestor(rootID);
+////        QueryBuilder<AdjacentClosure> aqb = adjacentClosureDao.queryBuilder();
+////        rootAnscstor = aqb.where(aqb.and(AdjacentClosureDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
+////                ,AdjacentClosureDao.Properties.Ancestor.eq(rootID)))
+////                .list();
+//
+//        //建立一个列表代表最深的一层的所有节点
+//        List<AdjacentClosure> deepest = new ArrayList<>();
+//        //获取最深的深度
+//        for(AdjacentClosure adjacentClosure : rootAnscstor){
+//            if(adjacentClosure.getDepth()>depth){
+//                depth = adjacentClosure.getDepth();
+//            }
+//        }
+//
+//        for(AdjacentClosure adjacentClosure : rootAnscstor){
+//            if(adjacentClosure.getDepth().equals(depth)){
+//                deepest.add(adjacentClosure);
+//            }
+//        }
+//
+//        //最后一层权重
+//        List<Double> lastWeight = new ArrayList<>();
+//
+//        //todo:将最后一层与结论层的归一矩阵 转换成一个m*n的矩阵
+//        // m->中间层（准则层最后一层）的准则个数 n->结论个数
+//        //获取所有结论
+//        List<Conclusion> conList = new ArrayList<>();
+//        List<Double> wcList = new ArrayList<>();
+//
+//        conList = conclusionDBService.selByModel();
+////        QueryBuilder<Conclusion> cqb = conclusionDao.queryBuilder();
+////        conList = cqb.where(ConclusionDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)).list();
+//
+//        if(conList == null){
+//            System.out.println("请先添加结论！");
+////            Log.e("请先添加结论！","1");
+////            return null;
+//            return;
+//        }
+//
+//        Integer nodeID;
+////        Long nodeID;
+//        String nowValue;
+//
+//        // 根据结论中plan 作为医生ID搜索医生信息
+//        DocInfo2 docInfo2;
+//
+//        for(int i = 0;i<deepest.size();i++){
+//            //todo:这里开始可能出现问题
+//
+//            //获取当前节点ID
+//            AdjacentClosure nowA = deepest.get(i);
+////            nodeID = Long.valueOf(nowA.getDescendant());
+//            nodeID = nowA.getDescendant();
+//            //根据ID获取值
+//            TreeNodeContent myTreeNode = treeNodeDBService.selById(nodeID);
+////            QueryBuilder<TreeNodeContent> tqb1 = treeNodeContentDao.queryBuilder();
+////            TreeNodeContent myTreeNode = tqb1.where(tqb1.and(TreeNodeContentDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
+////                    ,TreeNodeContentDao.Properties.Id.eq(nodeID)))
+////                    .unique();
+//
+//            System.out.println("myTreeNode:"+myTreeNode.toString());
+//            nowValue = myTreeNode.getValue();
+//            //从归一权重中取值
+//            NormalizationWeight normalizationWeight = normalizationWeightDBService.selByNodeValue(nowValue);
+////            QueryBuilder<NormalizationWeight> nqb = normalizationWeightDao.queryBuilder();
+////            normalizationWeight = nqb.where(nqb.and(NormalizationWeightDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
+////                    ,NormalizationWeightDao.Properties.NextVlue.eq(nowValue)))
+////                    .unique();
+//            //给当前节点赋值初始值为以当前节点为nextValue的归一权重表中的数据
+//            lastWeight.add(normalizationWeight.getWeight());
+//
+//            //从数据库归一权重表中查找以最后一层节点为当前值 以conclusion为nextValue的归一权重加入wc
+//            //取最后一层与结论层的值
+//            System.out.println("conList.size()"+String.valueOf(conList.size()));
+//            for(int j = 0;j<conList.size();j++){
+////                nqb=normalizationWeightDao.queryBuilder();
+////                Log.e("nqb1",nqb.list().toString());
+//                System.out.println("nowValue:"+nowValue);
+////                Log.e("nowValue",nowValue);
+//                System.out.println("conList.get(j):"+conList.get(j).toString());
+////                Log.e("conList.get(j)",conList.get(j).toString());
+//                NormalizationWeight myNor = new NormalizationWeight();
+//
+//                // todo: 这里要做出修改，这边的plan是医生ID而非医生姓名。根据ID搜索姓名,这边是模型中的医生ID为结论，若一般方案中没有方案的详细信息则不需要麻烦获得具体信息
+//                docInfo2 = docInfo2DBservice.findById(Integer.parseInt(conList.get(j).getPlan()));
+//
+//                //修改前
+////                myNor = normalizationWeightDBService.selByTwoValue(nowValue,conList.get(j).getPlan());
+//
+//                // 修改后
+//                myNor = normalizationWeightDBService.selByTwoValue(nowValue,docInfo2.getDocname());
+////                myNor = nqb.where(nqb.and(NormalizationWeightDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
+////                        ,NormalizationWeightDao.Properties.Value.eq(nowValue)
+////                        ,NormalizationWeightDao.Properties.NextVlue.eq(conList.get(j).getPlan())))
+////                        .unique();
+//                System.out.println("myNor"+myNor.toString());
+////                Log.e("myNor",myNor.toString());
+//                wcList.add(myNor.getWeight());
+//            }
+////                Log.e("wcList",wcList.toString());
+//
+//            //从数据库中查询当前节点有没有父节点
+//            //父节点就是在邻接矩阵中后裔ID为当前节点ID且深度为1的节点
+//            AdjacentClosure fatherAdj = adjacentClosureDBService.selByDescendant(nodeID);
+////            QueryBuilder<AdjacentClosure> aqb1 = adjacentClosureDao.queryBuilder();
+////            AdjacentClosure fatherAdj = aqb1.where(aqb1.and(AdjacentClosureDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
+////                    ,AdjacentClosureDao.Properties.Descendant.eq(nodeID)
+////                    ,AdjacentClosureDao.Properties.Depth.eq(1)))
+////                    .unique();
+//
+//            //当父节点不为根节点且存在
+//            //root节点一般代表项目名的节点
+//            while((fatherAdj.getAncestor()!=rootID.intValue())&&(fatherAdj!=null)){
+//
+//                //获取父节点权重
+//                //父节点ID
+////                Long fNodeID = Long.valueOf(fatherAdj.getAncestor());
+//                Integer fNodeID = fatherAdj.getAncestor();
+//                TreeNodeContent ftnc = treeNodeDBService.selById(fNodeID);
+////                TreeNodeContent ftnc = tqb.where(tqb.and(TreeNodeContentDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
+////                        ,TreeNodeContentDao.Properties.Id.eq(fNodeID)))
+////                        .unique();
+//                String fValue = ftnc.getValue();
+//                NormalizationWeight fnw = normalizationWeightDBService.selByNodeValue(fValue);
+////                NormalizationWeight fnw = nqb.where(nqb.and(NormalizationWeightDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
+////                        ,NormalizationWeightDao.Properties.NextVlue.eq(fValue)))
+////                        .unique();
+//                //当前节点权重乘以父节点权重
+//                lastWeight.set(i,lastWeight.get(i)*fnw.getWeight());
+//                //再往上找父节点直到找到根节点为止
+//                fatherAdj = adjacentClosureDBService.selByDescendant(fNodeID);
+////                fatherAdj = aqb1.where(aqb1.and(AdjacentClosureDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
+////                        ,AdjacentClosureDao.Properties.Descendant.eq(fNodeID)
+////                        ,AdjacentClosureDao.Properties.Depth.eq(1)))
+////                        .unique();
+//            }
+//        }
+//
+//        System.out.println("lastWeight:"+lastWeight.toString());
+//        //到此得到了一个n*1的矩阵（waph）
+//
+//
+//        //获取wc
+//        //行应该是结论
+//        //列应该是准则层最后一层
+//        int n = conList.size();//行
+//        int m = lastWeight.size();//列
+//
+//        System.out.println("wcList:"+String.valueOf(wcList.size()));
+////        Log.e("wcList",String.valueOf(wcList.size()));
+//
+//        Double[][]  wc = new Double[n][m];
+//        int count=0;
+//
+////            for(int i = 0;i<n;i++){
+////                for(int j = 0;j<m;j++){
+////                    //从list中依次取值并且count自增
+////                    wc[i][j] = wcList.get(count++);
+////                    Log.e("wc[i][j]",String.valueOf(wc[i][j]));
+////                }
+////            }
+//        //上述的是错误的 因为wcList.get(count++);是从数据库中取出来的排列是一列一列的
+//        //n=3,m=6
+//        for(int i = 0;i<m;i++){
+//            for(int j = 0;j<n;j++){
+//                //从list中依次取值并且count自增
+//                System.out.println("j and i:"+String.valueOf(j + " " + i));
+////                Log.e("j and i",String.valueOf(j + " " + i));
+//                wc[j][i] = wcList.get(count++);
+//                System.out.println("wc[i][j]:"+String.valueOf(wc[j][i]));
+////                Log.e("wc[i][j]",String.valueOf(wc[j][i]));
+//            }
+//        }
+//
+//        System.out.println("depth:"+String.valueOf(depth));
+////        Log.e("depth:",String.valueOf(depth));
+//
+//        //矩阵计算wc * waph
+//        List<Double> resList = new ArrayList<>();
+//        Double res;
+//        for(int i = 0;i<n;i++){
+//            res=0.0;
+//            for(int k = 0;k<m;k++){
+//                System.out.println("wc[i][k]*last:"+String.valueOf(wc[i][k]*lastWeight.get(k)));
+//                res += wc[i][k]*lastWeight.get(k);
+//            }
+//            resList.add(res);
+//            System.out.println("res:"+String.valueOf(res));
+////            Log.e("res",String.valueOf(res));
+//        }
+//
+//        //存入数据库
+//        Conclusion myCon = new Conclusion();
+//        for(int i = 0;i<resList.size();i++){
+//            myCon = conList.get(i);
+//            myCon.setPriority(Float.valueOf(resList.get(i).toString()));
+//
+//            // 不知道结论是否保存成功
+//            System.out.println("myCon:" + myCon.toString());
+//            conclusionDBService.updByConclusion(myCon);
+////            conclusionDao.update(myCon);
+//        }
+
+
+
+
+    }
+
+    @Override
+    public CommonResult concalGeneral(ConcalWrapper concalWrapper) {
+        CommonResult result = new CommonResult();
+        System.out.println("concalWrapper = [" + concalWrapper + "]");
         int depth=0;
         //获取项目名代表的节点ID（根节点ID
-        TreeNodeContent rootTreeNode = treeNodeDBService.selByContent(projectInformationDBService.selNowModel().getProjectName());
+        // 根据ID与项目名获取项目根节点
+        TreeNodeContent rootTreeNode = treeNodeDBService.selRootByPI(concalWrapper);
         System.out.println("rootTreeNode:"+rootTreeNode.toString());
 
 
@@ -152,11 +377,12 @@ public class CalculationServiceImpl implements CalculationService {
 
         //获取项目深度
         //以根节点为祖先的所有节点
-        List<AdjacentClosure> rootAnscstor = adjacentClosureDBService.selByAncestor(rootID);
-//        QueryBuilder<AdjacentClosure> aqb = adjacentClosureDao.queryBuilder();
-//        rootAnscstor = aqb.where(aqb.and(AdjacentClosureDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
-//                ,AdjacentClosureDao.Properties.Ancestor.eq(rootID)))
-//                .list();
+        // 可以根据根节点ID获取所有以该ID为祖先节点的所有记录
+        // 这个ID代表着某个项目
+//        List<AdjacentClosure> rootAnscstor = adjacentClosureDBService.selByAncestor(rootID);
+        List<AdjacentClosure> rootAnscstor = adjacentClosureDBService.selByAP(concalWrapper.getProjectID(),rootID);
+        System.out.println("rootAncestor:" + rootAnscstor);
+
 
         //建立一个列表代表最深的一层的所有节点
         List<AdjacentClosure> deepest = new ArrayList<>();
@@ -180,9 +406,12 @@ public class CalculationServiceImpl implements CalculationService {
         // m->中间层（准则层最后一层）的准则个数 n->结论个数
         //获取所有结论
         List<Conclusion> conList = new ArrayList<>();
+        // 准则层最后一层-结论层权重信息
         List<Double> wcList = new ArrayList<>();
 
-        conList = conclusionDBService.selByModel();
+        // 可能要固定加入新的结论
+//        conList = conclusionDBService.selByPI(concalWrapper);
+        conList = conclusionDBService.selOrInsByPI(concalWrapper);
 //        QueryBuilder<Conclusion> cqb = conclusionDao.queryBuilder();
 //        conList = cqb.where(ConclusionDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)).list();
 
@@ -190,107 +419,151 @@ public class CalculationServiceImpl implements CalculationService {
             System.out.println("请先添加结论！");
 //            Log.e("请先添加结论！","1");
 //            return null;
-            return;
+            result.setFlag(false);
+            result.setReviews("请先添加结论！");
+            return result;
         }
 
         Integer nodeID;
 //        Long nodeID;
         String nowValue;
 
-        // 根据结论中plan 作为医生ID搜索医生信息
+//        // 根据结论中plan 作为医生ID搜索医生信息
+//        DocInfo2 docInfo2;
+        NorWrapper norWrapper = new NorWrapper();
+        norWrapper.setConcalWrapper(concalWrapper);
         DocInfo2 docInfo2;
 
+        // 遍历出去结论外的树形结构的最底层
         for(int i = 0;i<deepest.size();i++){
             //todo:这里开始可能出现问题
 
             //获取当前节点ID
             AdjacentClosure nowA = deepest.get(i);
 //            nodeID = Long.valueOf(nowA.getDescendant());
+
+            //nodeID代表树形结构最底层的节点ID
             nodeID = nowA.getDescendant();
             //根据ID获取值
             TreeNodeContent myTreeNode = treeNodeDBService.selById(nodeID);
-//            QueryBuilder<TreeNodeContent> tqb1 = treeNodeContentDao.queryBuilder();
-//            TreeNodeContent myTreeNode = tqb1.where(tqb1.and(TreeNodeContentDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
-//                    ,TreeNodeContentDao.Properties.Id.eq(nodeID)))
-//                    .unique();
 
             System.out.println("myTreeNode:"+myTreeNode.toString());
             nowValue = myTreeNode.getValue();
             //从归一权重中取值
-            NormalizationWeight normalizationWeight = normalizationWeightDBService.selByNodeValue(nowValue);
-//            QueryBuilder<NormalizationWeight> nqb = normalizationWeightDao.queryBuilder();
-//            normalizationWeight = nqb.where(nqb.and(NormalizationWeightDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
-//                    ,NormalizationWeightDao.Properties.NextVlue.eq(nowValue)))
-//                    .unique();
+            // 两层模型这样做没问题
+            // 三层呢
+            // 出错了
+            // 逻辑修改
+            norWrapper.setNextValue(nowValue);
+//            NormalizationWeight normalizationWeight = normalizationWeightDBService.selByPI(norWrapper);
+
+            //从数据库中查询当前节点有没有父节点
+            //父节点就是在邻接矩阵中后裔ID为当前节点ID且深度为1的节点
+//            AdjacentClosure fatherAdj = adjacentClosureDBService.selByDescendant(nodeID);
+            AdjacentClosure fatherAdj = adjacentClosureDBService.selByDP(concalWrapper.getProjectID(),nodeID);
+            // 找出父节点的内容，根据当前层节点内容-父节点层内容和模型信息查询权重信息
+            TreeNodeContent mTNC = treeNodeDBService.selById(fatherAdj.getAncestor());
+            norWrapper.setNowValue(mTNC.getValue());
+            NormalizationWeight normalizationWeight = normalizationWeightDBService.selByTwoValues(norWrapper);
+
+
             //给当前节点赋值初始值为以当前节点为nextValue的归一权重表中的数据
             lastWeight.add(normalizationWeight.getWeight());
 
             //从数据库归一权重表中查找以最后一层节点为当前值 以conclusion为nextValue的归一权重加入wc
             //取最后一层与结论层的值
             System.out.println("conList.size()"+String.valueOf(conList.size()));
+            // 上述向前取值，下面的for循环向后取值取最后一层-结论权重
             for(int j = 0;j<conList.size();j++){
-//                nqb=normalizationWeightDao.queryBuilder();
-//                Log.e("nqb1",nqb.list().toString());
+
                 System.out.println("nowValue:"+nowValue);
-//                Log.e("nowValue",nowValue);
                 System.out.println("conList.get(j):"+conList.get(j).toString());
-//                Log.e("conList.get(j)",conList.get(j).toString());
                 NormalizationWeight myNor = new NormalizationWeight();
 
-                // todo: 这里要做出修改，这边的plan是医生ID而非医生姓名。根据ID搜索姓名,这边是模型中的医生ID为结论，若一般方案中没有方案的详细信息则不需要麻烦获得具体信息
+                // todo: 这里要做出修改，这边的plan是医生ID而非医生姓名。根据ID搜索姓名
+                // 根据实际情况修改回去
+//                docInfo2 = docInfo2DBservice.findById(Integer.parseInt(conList.get(j).getPlan()));
+
+                // todo:
+                // 封装传输数据获取准则最后一层-结论层的权重数据
+                // 出问题
+
                 docInfo2 = docInfo2DBservice.findById(Integer.parseInt(conList.get(j).getPlan()));
 
+
+                norWrapper.setNowValue(nowValue);
+//                norWrapper.setNextValue(conList.get(j).getPlan());
+                norWrapper.setNextValue(docInfo2.getDocname());
                 //修改前
 //                myNor = normalizationWeightDBService.selByTwoValue(nowValue,conList.get(j).getPlan());
+                // 修改后
+                // 这里的应该不带用户ID是系统所创造的
+                // 设定系统用户的ID
+//                myNor = normalizationWeightDBService.selByTwoValues(norWrapper);
+                myNor = normalizationWeightDBService.selByTwoValuesGeneral(norWrapper);
 
                 // 修改后
-                myNor = normalizationWeightDBService.selByTwoValue(nowValue,docInfo2.getDocname());
-//                myNor = nqb.where(nqb.and(NormalizationWeightDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
-//                        ,NormalizationWeightDao.Properties.Value.eq(nowValue)
-//                        ,NormalizationWeightDao.Properties.NextVlue.eq(conList.get(j).getPlan())))
-//                        .unique();
+//                myNor = normalizationWeightDBService.selByTwoValue(nowValue,docInfo2.getDocname());
+
+
+
                 System.out.println("myNor"+myNor.toString());
 //                Log.e("myNor",myNor.toString());
                 wcList.add(myNor.getWeight());
             }
 //                Log.e("wcList",wcList.toString());
 
+            // 向上一层查找
+            // 设置父节点为nextvalue
+            norWrapper.setNextValue(mTNC.getValue());
             //从数据库中查询当前节点有没有父节点
             //父节点就是在邻接矩阵中后裔ID为当前节点ID且深度为1的节点
-            AdjacentClosure fatherAdj = adjacentClosureDBService.selByDescendant(nodeID);
-//            QueryBuilder<AdjacentClosure> aqb1 = adjacentClosureDao.queryBuilder();
-//            AdjacentClosure fatherAdj = aqb1.where(aqb1.and(AdjacentClosureDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
-//                    ,AdjacentClosureDao.Properties.Descendant.eq(nodeID)
-//                    ,AdjacentClosureDao.Properties.Depth.eq(1)))
-//                    .unique();
+            // 以父节点的ID作为子节点寻找父节点的父节点
+            // 去看看A-B中的A是不是根节点了
+//            fatherAdj = adjacentClosureDBService.selByDescendant(fatherAdj.getAncestor());
+            fatherAdj = adjacentClosureDBService.selByDP(concalWrapper.getProjectID(),fatherAdj.getAncestor());
 
-            //当父节点不为根节点且存在
-            //root节点一般代表项目名的节点
-            while((fatherAdj.getAncestor()!=rootID.intValue())&&(fatherAdj!=null)){
-
-                //获取父节点权重
-                //父节点ID
+            // 如果A是根节点那么根节点的上一层为空则不需要继续累乘，否则需要累乘
+            if (fatherAdj!=null){
+                //当父节点不为根节点且存在
+                //root节点一般代表项目名的节点
+                // todo:alwasys true，除根节点外的两层模型中这个循环基本用不到
+                // 尝试改为do-while
+                do {
+                    //获取父节点权重
+                    //父节点ID
 //                Long fNodeID = Long.valueOf(fatherAdj.getAncestor());
-                Integer fNodeID = fatherAdj.getAncestor();
-                TreeNodeContent ftnc = treeNodeDBService.selById(fNodeID);
-//                TreeNodeContent ftnc = tqb.where(tqb.and(TreeNodeContentDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
-//                        ,TreeNodeContentDao.Properties.Id.eq(fNodeID)))
-//                        .unique();
-                String fValue = ftnc.getValue();
-                NormalizationWeight fnw = normalizationWeightDBService.selByNodeValue(fValue);
-//                NormalizationWeight fnw = nqb.where(nqb.and(NormalizationWeightDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
-//                        ,NormalizationWeightDao.Properties.NextVlue.eq(fValue)))
-//                        .unique();
-                //当前节点权重乘以父节点权重
-                lastWeight.set(i,lastWeight.get(i)*fnw.getWeight());
-                //再往上找父节点直到找到根节点为止
-                fatherAdj = adjacentClosureDBService.selByDescendant(fNodeID);
-//                fatherAdj = aqb1.where(aqb1.and(AdjacentClosureDao.Properties.ProjectName.eq(Constant.PROJECT_NAME)
-//                        ,AdjacentClosureDao.Properties.Descendant.eq(fNodeID)
-//                        ,AdjacentClosureDao.Properties.Depth.eq(1)))
-//                        .unique();
+                    Integer fNodeID = fatherAdj.getAncestor();
+                    // 父节点信息
+                    TreeNodeContent ftnc = treeNodeDBService.selById(fNodeID);
+
+                    String fValue = ftnc.getValue();
+                    norWrapper.setNowValue(fValue);
+                    // 设置父节点为nextvalue
+                    norWrapper.setNextValue(mTNC.getValue());
+                    // 修改当前代表节点
+                    mTNC = ftnc;
+//                norWrapper.setNextValue();
+                    // 修改
+//                NormalizationWeight fnw = normalizationWeightDBService.selByNodeValue(fValue);
+                    NormalizationWeight fnw = normalizationWeightDBService.selByTwoValues(norWrapper);
+
+                    // 修改为根据当前层与上一层的节点内容和模型信息查询权重信息
+
+
+                    //当前节点权重乘以父节点权重
+                    lastWeight.set(i,lastWeight.get(i)*fnw.getWeight());
+                    //再往上找父节点直到找到根节点为止
+//                    fatherAdj = adjacentClosureDBService.selByDescendant(fNodeID);
+                    fatherAdj = adjacentClosureDBService.selByDP(concalWrapper.getProjectID(),fNodeID);
+                }while ((fatherAdj!=null)&&fatherAdj.getAncestor()!=rootID.intValue());
             }
+
+
+
         }
+
+        // todo:看到这
 
         System.out.println("lastWeight:"+lastWeight.toString());
         //到此得到了一个n*1的矩阵（waph）
@@ -346,7 +619,7 @@ public class CalculationServiceImpl implements CalculationService {
         }
 
         //存入数据库
-        Conclusion myCon = new Conclusion();
+        Conclusion myCon;
         for(int i = 0;i<resList.size();i++){
             myCon = conList.get(i);
             myCon.setPriority(Float.valueOf(resList.get(i).toString()));
@@ -356,16 +629,17 @@ public class CalculationServiceImpl implements CalculationService {
             conclusionDBService.updByConclusion(myCon);
 //            conclusionDao.update(myCon);
         }
-
+        result.setFlag(true);
+        result.setReviews("计算成功");
+        return result;
     }
-
 
     /**
      * 专家AHP的结论计算
      * @return
      */
     @Override
-    public CommonResult concalExpert(ConcalWrapper concalWrapper) {
+    public CommonResult concalExpert(ConcalWrapper concalWrapper) {/*
         CommonResult result = new CommonResult();
         System.out.println("concalWrapper = [" + concalWrapper + "]");
         int depth=0;
@@ -647,6 +921,8 @@ public class CalculationServiceImpl implements CalculationService {
         result.setFlag(true);
         result.setReviews("计算成功");
         return result;
+        */
+        return null;
     }
 
     @Override
@@ -667,6 +943,7 @@ public class CalculationServiceImpl implements CalculationService {
         criterionList.add("综合评分");
         criterionList.add("视话价格");
         criterionList.add("图文价格");
+        // 竖着的数据代表某个医生
         for (int i = 0; i < 10; i++) {
             docInfo2 = docList.get(i);
             criterionData[0][i] = Double.parseDouble(docInfo2.getNapm());
@@ -824,10 +1101,14 @@ public class CalculationServiceImpl implements CalculationService {
 
         System.out.println(nwResult.toString());
 
+        // 设置项目ID与用户ID
+        myNW.setProjectId(rootCriData.getProjectID());
+        myNW.setUserId(rootCriData.getUserID());
+
 
         String nextValue;
         // 5在之后需要替换为准则个数
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < rootCriData.getNextList().size(); j++) {
             // 根节点--准则的判断矩阵
             // 准则为nextValue
             nextValue = nextList.get(j);

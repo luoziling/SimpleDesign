@@ -1,6 +1,7 @@
 package com.wzb.dbserviceimpl.impl;
 
 import com.wzb.common.CommonResult;
+import com.wzb.common.ConWrapper;
 import com.wzb.common.ConcalWrapper;
 import com.wzb.common.ConclusionResult;
 import com.wzb.dbservice.ConclusionDBService;
@@ -43,11 +44,48 @@ public class ConclusionDBServiceImpl implements ConclusionDBService {
     }
 
     @Override
+    public List<Conclusion> selByMU(ConWrapper conWrapper) {
+        ConclusionExample example = new ConclusionExample();
+        example.createCriteria().andProjectIdEqualTo(conWrapper.getProjectID())
+                .andUserIdEqualTo(conWrapper.getUserID());
+        return conclusionMapper.selectByExample(example);
+    }
+
+    @Override
     public List<Conclusion> selByPI(ConcalWrapper concalWrapper) {
         ConclusionExample example = new ConclusionExample();
         example.createCriteria().andProjectIdEqualTo(concalWrapper.getProjectID())
                 .andUserIdEqualTo(concalWrapper.getUserID());
         return conclusionMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<Conclusion> selOrInsByPI(ConcalWrapper concalWrapper) {
+        ConclusionExample example = new ConclusionExample();
+        example.createCriteria().andProjectIdEqualTo(concalWrapper.getProjectID())
+                .andUserIdEqualTo(concalWrapper.getUserID());
+        // 去看看能不能查到已有的记录，查不到则插入
+        List<Conclusion> conclusions = conclusionMapper.selectByExample(example);
+        System.out.println("conclusions1 = " + conclusions);
+//        if (conclusions==null){
+        // 没有数据插入数据
+        if (conclusions.size()<=0){
+            // 插入记录
+            Conclusion conclusion = new Conclusion();
+            conclusion.setProjectId(concalWrapper.getProjectID());
+            conclusion.setUserId(concalWrapper.getUserID());
+            conclusion.setProjectName(concalWrapper.getProjectName());
+            // 录入前十个医生
+            for (int i = 1; i < 11; i++) {
+                conclusion.setPlan(i+"");
+                conclusionMapper.insert(conclusion);
+            }
+            // 再次查询
+            conclusions = conclusionMapper.selectByExample(example);
+            System.out.println("conclusions = " + conclusions);
+        }
+        // 返回
+        return conclusions;
     }
 
     @Override

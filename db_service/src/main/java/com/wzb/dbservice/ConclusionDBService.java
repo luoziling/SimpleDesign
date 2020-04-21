@@ -1,6 +1,7 @@
 package com.wzb.dbservice;
 
 import com.wzb.common.CommonResult;
+import com.wzb.common.ConWrapper;
 import com.wzb.common.ConcalWrapper;
 import com.wzb.common.ConclusionResult;
 import com.wzb.pojo.Conclusion;
@@ -20,10 +21,23 @@ public interface ConclusionDBService {
     List<Conclusion> selByModel();
 
     /**
+     * 根据模型ID与用户ID搜索结论
+     * @return
+     */
+    List<Conclusion> selByMU(ConWrapper conWrapper);
+
+    /**
      * 根据模型信息搜索
      * @return
      */
     List<Conclusion> selByPI(ConcalWrapper concalWrapper);
+
+    /**
+     * 根据信息搜索结论，如果没有则插入新的结论
+     * @param concalWrapper
+     * @return
+     */
+    List<Conclusion> selOrInsByPI(ConcalWrapper concalWrapper);
 
     /**
      * insert a record
@@ -54,6 +68,8 @@ public interface ConclusionDBService {
      * @return
      */
     ConclusionResult selConByPI(Integer projectID);
+
+
 
     /**
      * 专家模块中的保存方案功能

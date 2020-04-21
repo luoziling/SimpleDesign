@@ -74,6 +74,12 @@ public class TreeNodeContentController implements TreeNodeDBService {
         return treeNodeDBService.selByPI(projectName);
     }
 
+    @RequestMapping(value = "/selByPi/{projectID}",method = RequestMethod.GET)
+    @Override
+    public List<TreeNodeContent> selByPi(@PathVariable("projectID") Integer projectID) {
+        return treeNodeDBService.selByPi(projectID);
+    }
+
     @RequestMapping(value = "/saveTreeNode",method = RequestMethod.POST)
     @Override
     public CommonResult saveTreeNode(@RequestBody SaveNodeWrapper saveNodeWrapper) {

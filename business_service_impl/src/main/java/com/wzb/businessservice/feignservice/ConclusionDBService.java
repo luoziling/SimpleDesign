@@ -24,6 +24,9 @@ public interface ConclusionDBService {
     @RequestMapping(value = "/selByPI",method = RequestMethod.POST)
     public List<Conclusion> selByPI(@RequestBody ConcalWrapper concalWrapper);
 
+    @RequestMapping(value = "/selOrInsByPI",method = RequestMethod.POST)
+    public List<Conclusion> selOrInsByPI(@RequestBody ConcalWrapper concalWrapper);
+
     @RequestMapping(value = "/insOneRecord",method = RequestMethod.POST)
     public int insOneRecord(@RequestBody Conclusion conclusion);
 

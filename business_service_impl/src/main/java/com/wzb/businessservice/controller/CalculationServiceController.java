@@ -32,6 +32,12 @@ public class CalculationServiceController implements CalculationService {
         calculationService.conclusionCalculation();
     }
 
+    @RequestMapping(value = "/concalGeneral",method = RequestMethod.POST)
+    @Override
+    public CommonResult concalGeneral(@RequestBody ConcalWrapper concalWrapper) {
+        return calculationService.concalGeneral(concalWrapper);
+    }
+
     @RequestMapping("/criconcal")
     @Override
     public void criConCalculation() {

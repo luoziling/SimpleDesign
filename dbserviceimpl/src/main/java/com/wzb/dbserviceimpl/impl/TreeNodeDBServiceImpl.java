@@ -107,6 +107,13 @@ public class TreeNodeDBServiceImpl implements TreeNodeDBService {
     }
 
     @Override
+    public List<TreeNodeContent> selByPi(Integer projectID) {
+        TreeNodeContentExample example = new TreeNodeContentExample();
+        example.createCriteria().andProjectIdEqualTo(projectID);
+        return treeNodeContentMapper.selectByExample(example);
+    }
+
+    @Override
     public CommonResult saveTreeNode(SaveNodeWrapper saveNodeWrapper) {
         CommonResult result = new CommonResult();
         try {

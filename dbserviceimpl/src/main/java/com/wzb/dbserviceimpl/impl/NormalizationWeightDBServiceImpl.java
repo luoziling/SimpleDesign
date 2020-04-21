@@ -102,12 +102,35 @@ public class NormalizationWeightDBServiceImpl implements NormalizationWeightDBSe
     }
 
     @Override
+    public NormalizationWeight selByTwoValuesGeneral(NorWrapper norWrapper) {
+        System.out.println("norWrapper = " + norWrapper);
+        NormalizationWeightExample example = new NormalizationWeightExample();
+        example.createCriteria().andProjectIdEqualTo(norWrapper.getConcalWrapper().getProjectID())
+                // 2代表系统ID，查询系统构建的通用模型
+                .andUserIdEqualTo(2)
+                .andValueEqualTo(norWrapper.getNowValue())
+                .andNextValueEqualTo(norWrapper.getNextValue());
+        return normalizationWeightMapper.selectByExample(example).get(0);
+    }
+
+    @Override
     public int insOrUpdByNW(NormalizationWeight normalizationWeight) {
 
         synchronized (this){
-            NormalizationWeight saved = this.selByTwoValue(normalizationWeight.getValue(), normalizationWeight.getNextValue());
+            // 根据项目id、用户id、两个value查询唯一记录
+            NormalizationWeightExample example = new NormalizationWeightExample();
+            example.createCriteria().andProjectIdEqualTo(normalizationWeight.getProjectId())
+                    .andUserIdEqualTo(normalizationWeight.getUserId())
+                    .andValueEqualTo(normalizationWeight.getValue())
+                    .andNextValueEqualTo(normalizationWeight.getNextValue());
+//            NormalizationWeight saved = this.selByTwoValue(normalizationWeight.getValue(), normalizationWeight.getNextValue());
 
-            if (saved!=null){
+            List<NormalizationWeight> nos = normalizationWeightMapper.selectByExample(example);
+
+//            NormalizationWeight saved = normalizationWeightMapper.selectByExample(example).get(0);
+
+            if (nos.size()>0){
+                NormalizationWeight saved = nos.get(0);
                 System.out.println("update!!!!!!!!!!!!!!!!!!!!!!!!" + saved.toString());
                 //弄反了
 //                saved.setId(normalizationWeight.getId());

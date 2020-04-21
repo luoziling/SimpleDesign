@@ -48,6 +48,12 @@ public class NormalizationWeightController implements NormalizationWeightDBServi
         return normalizationWeightDBService.selByTwoValues(norWrapper);
     }
 
+    @RequestMapping(value = "/selByTwoValuesGeneral",method = RequestMethod.POST)
+    @Override
+    public NormalizationWeight selByTwoValuesGeneral(@RequestBody NorWrapper norWrapper) {
+        return normalizationWeightDBService.selByTwoValuesGeneral(norWrapper);
+    }
+
     @RequestMapping(value = "/insOrUpdByNW",method = RequestMethod.POST)
     @Override
     public int insOrUpdByNW(@RequestBody NormalizationWeight normalizationWeight) {

@@ -1,6 +1,7 @@
 package com.wzb.dbserviceimpl.controller;
 
 import com.wzb.common.CommonResult;
+import com.wzb.common.ConWrapper;
 import com.wzb.common.ConcalWrapper;
 import com.wzb.common.ConclusionResult;
 import com.wzb.dbservice.ConclusionDBService;
@@ -28,10 +29,22 @@ public class ConclusionController implements ConclusionDBService {
         return conclusionDBService.selByModel();
     }
 
+    @RequestMapping(value = "/selByMU",method = RequestMethod.POST)
+    @Override
+    public List<Conclusion> selByMU(@RequestBody ConWrapper conWrapper) {
+        return conclusionDBService.selByMU(conWrapper);
+    }
+
     @RequestMapping(value = "/selByPI",method = RequestMethod.POST)
     @Override
     public List<Conclusion> selByPI(@RequestBody ConcalWrapper concalWrapper) {
         return conclusionDBService.selByPI(concalWrapper);
+    }
+
+    @RequestMapping(value = "/selOrInsByPI",method = RequestMethod.POST)
+    @Override
+    public List<Conclusion> selOrInsByPI(@RequestBody ConcalWrapper concalWrapper) {
+        return conclusionDBService.selOrInsByPI(concalWrapper);
     }
 
     @RequestMapping(value = "/insOneRecord",method = RequestMethod.POST)

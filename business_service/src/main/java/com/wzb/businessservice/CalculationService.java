@@ -18,6 +18,9 @@ public interface CalculationService {
      */
     void conclusionCalculation();
 
+
+    CommonResult concalGeneral(ConcalWrapper concalWrapper);
+
     /**
      * 准则--结论
      * 对应的归一化权重计算

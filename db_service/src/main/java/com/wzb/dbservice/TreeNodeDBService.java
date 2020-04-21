@@ -77,6 +77,13 @@ public interface TreeNodeDBService {
     List<TreeNodeContent> selByPI(String projectName);
 
     /**
+     * 根据项目ID查找所有的节点
+     * @param projectID
+     * @return
+     */
+    List<TreeNodeContent> selByPi(Integer projectID);
+
+    /**
      *  保存新建节点
      * @param saveNodeWrapper
      * @return

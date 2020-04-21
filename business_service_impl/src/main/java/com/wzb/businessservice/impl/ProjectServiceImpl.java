@@ -62,7 +62,7 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Override
     public List<ProjectInformation> getAll(){
-        String req ="/project_information/get_all";
+//        String req ="/project_information/get_all";
 
         //invokeUtil
 //        ResponseEntity<List<ProjectInformation>> responseEntity = InvokeUtil.getAll(loadBalancerClient,req);

@@ -86,7 +86,14 @@ public class MatrixStorageDBServiceImpl implements MatrixStorageDBService {
             MatrixStorage exist;
             MatrixStorageExample example1 = new MatrixStorageExample();
 //            System.out.println("values: " + matrixStorage.get);
-            example1.createCriteria().andProjectNameEqualTo(matrixStorage.getProjectName()).andIEqualTo(matrixStorage.getI()).andJEqualTo(matrixStorage.getJ()).andValueEqualTo(matrixStorage.getValue());
+            example1.createCriteria().andProjectNameEqualTo(matrixStorage.getProjectName())
+                    .andIEqualTo(matrixStorage.getI())
+                    .andJEqualTo(matrixStorage.getJ())
+                    .andValueEqualTo(matrixStorage.getValue())
+                    // 添加项目ID于用户ID，在用户使用情况下每个通用项目会有多个用户使用
+                    // 每个用户也可以使用多个通用项目
+                    .andProjectIdEqualTo(matrixStorage.getProjectId())
+                    .andUserIdEqualTo(matrixStorage.getUserId());
             List<MatrixStorage> list = matrixStorageMapper.selectByExample(example1);
             if (list.size()>0){
                 System.out.println("找到了111111111111111111111111111111111" + list.toString());

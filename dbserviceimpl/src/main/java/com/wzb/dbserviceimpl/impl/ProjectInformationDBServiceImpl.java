@@ -61,6 +61,8 @@ public class ProjectInformationDBServiceImpl implements ProjectInformationDBServ
         System.out.println("selAll");
         List<ProjectInformation> projectInformationList = null;
         ProjectInformationExample example = new ProjectInformationExample();
+        // 添加限制条件，只有系统的模型才能被看到
+        example.createCriteria().andUserIdEqualTo(2);
 //        example.createCriteria().andProjectNameEqualTo("测试project3");
 //        example.createCriteria().andProjectNameEqualTo("测试project3");
         // 暂定先全部查询后续可以改为分页查询

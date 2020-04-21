@@ -50,6 +50,13 @@ public interface NormalizationWeightDBService {
     NormalizationWeight selByTwoValues(NorWrapper norWrapper);
 
     /**
+     * 根据两层内容获取权重数据
+     * @param norWrapper
+     * @return
+     */
+    NormalizationWeight selByTwoValuesGeneral(NorWrapper norWrapper);
+
+    /**
      * 如果已经保存过则更改，未保存则插入
      * @param normalizationWeight
      * @return

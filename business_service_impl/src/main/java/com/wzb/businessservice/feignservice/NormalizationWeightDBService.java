@@ -28,6 +28,9 @@ public interface NormalizationWeightDBService {
     @RequestMapping(value = "/selByTwoValue",method = RequestMethod.POST)
     public NormalizationWeight selByTwoValues(@RequestBody NorWrapper norWrapper);
 
+    @RequestMapping(value = "/selByTwoValuesGeneral",method = RequestMethod.POST)
+    public NormalizationWeight selByTwoValuesGeneral(@RequestBody NorWrapper norWrapper);
+
     @RequestMapping(value = "/insOrUpdByNW",method = RequestMethod.POST)
     public int insOrUpdByNW(@RequestBody NormalizationWeight normalizationWeight);
 }
