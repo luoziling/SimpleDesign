@@ -14,4 +14,20 @@ public interface EcUserDBService {
      * @return
      */
     EcUser selByUsername(String username);
+
+    /**
+     * 新增用户
+     * @param user
+     * @return
+     */
+    int insByUser(EcUser user);
+
+    /**
+     *  更新用户信息
+     * @param user
+     * @return
+     */
+    int updByUser(EcUser user);
+
+
 }

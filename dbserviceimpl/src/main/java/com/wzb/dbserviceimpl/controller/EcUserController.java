@@ -25,4 +25,16 @@ public class EcUserController implements EcUserDBService {
         System.out.println("username = [" + username + "]");
         return ecUserDBService.selByUsername(username);
     }
+
+    @RequestMapping(value = "/insByUser",method = RequestMethod.POST)
+    @Override
+    public int insByUser(@RequestBody EcUser user) {
+        return ecUserDBService.insByUser(user);
+    }
+
+    @RequestMapping(value = "/updByUser", method = RequestMethod.POST)
+    @Override
+    public int updByUser(@RequestBody EcUser user) {
+        return ecUserDBService.updByUser(user);
+    }
 }

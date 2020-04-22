@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author Satsuki
  * @time 2019/10/1 19:39
@@ -28,7 +30,23 @@ public class EcUserDBServiceImpl implements EcUserDBService {
     public EcUser selByUsername(String username) {
         EcUserExample example = new EcUserExample();
         example.createCriteria().andUsernameEqualTo(username);
+        List<EcUser> ecUsers = ecUserMapper.selectByExample(example);
+        if (ecUsers.size()>0){
+            return ecUsers.get(0);
+        }else {
+            return null;
+        }
 
-        return ecUserMapper.selectByExample(example).get(0);
+//        return ecUserMapper.selectByExample(example).get(0);
+    }
+
+    @Override
+    public int insByUser(EcUser user) {
+        return ecUserMapper.insert(user);
+    }
+
+    @Override
+    public int updByUser(EcUser user) {
+        return ecUserMapper.updateByPrimaryKey(user);
     }
 }

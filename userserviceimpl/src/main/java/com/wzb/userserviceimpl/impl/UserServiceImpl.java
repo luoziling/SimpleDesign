@@ -1,5 +1,6 @@
 package com.wzb.userserviceimpl.impl;
 
+import com.wzb.common.CommonResult;
 import com.wzb.common.UserResult;
 import com.wzb.pojo.EcUser;
 import com.wzb.userservice.UserService;
@@ -53,5 +54,41 @@ public class UserServiceImpl implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public CommonResult userRegistration(EcUser user) {
+        // 查询是否由相同用户名
+        CommonResult result = new CommonResult();
+        EcUser sameUsername = ecUserDBService.selByUsername(user.getUsername());
+        if (sameUsername!=null&&sameUsername.getUsername().equals(user.getUsername())){
+            // 找到相同用户名
+            result.setFlag(false);
+            result.setReviews("用户名重复请重新输入用户名");
+            return result;
+        }
+        // 保存用户数据
+        ecUserDBService.insByUser(user);
+        result.setReviews("注册成功");
+        result.setFlag(true);
+        return result;
+    }
+
+    @Override
+    public CommonResult editUserInfo(EcUser user) {
+        CommonResult result = new CommonResult();
+
+        try {
+            ecUserDBService.updByUser(user);
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setFlag(false);
+            result.setReviews("保存失败请重试");
+            return result;
+        }
+
+        result.setFlag(true);
+        result.setReviews("保存成功");
+        return result;
     }
 }
